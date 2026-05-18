@@ -1,0 +1,40 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Spark Careers//Weekly Content Reminder//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VTIMEZONE
+TZID:America/Edmonton
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0700
+TZOFFSETTO:-0600
+TZNAME:MDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0600
+TZOFFSETTO:-0700
+TZNAME:MST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:spark-weekly-content-reminder@risepointcareers.com
+DTSTAMP:20260518T220000Z
+SUMMARY:Generate Spark Careers next-week content
+DESCRIPTION:Open Claude Code in IdleSpark/Marketing/social-assets and invoke /spark-weekly-content YYYY-W{next-week} to generate next week's social-post bundle.\n\nThe skill writes a prompt to prompts/. Paste it into a fresh claude.ai chat\, attach Brand Guide PDFs from IdleSpark/Branding Files/\, receive the bundle\, then follow the operational sequence in the skill file (push PNGs to repo\, run finalize script\, bulk-upload CSVs to Buffer).\n\nFirst occurrence: Fri May 29 2026 - generate Week 23 (Jun 1-5).\nSkill location: ~/.claude/skills/spark-weekly-content/SKILL.md
+DTSTART;TZID=America/Edmonton:20260529T120000
+DTEND;TZID=America/Edmonton:20260529T121500
+RRULE:FREQ=WEEKLY;BYDAY=FR
+LOCATION:Claude Code
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Time to generate next week's Spark social content
+TRIGGER:-PT0M
+END:VALARM
+END:VEVENT
+END:VCALENDAR
