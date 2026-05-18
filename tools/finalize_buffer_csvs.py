@@ -1,20 +1,26 @@
 """Finalize Spark Careers Buffer bulk-upload CSVs.
 
-Replaces __REPLACE_<basename>__ placeholders in source CSVs with public
-raw.githubusercontent.com URLs that point at PNGs already pushed to the
-Spark-Careers/social-assets repo.
+Two transforms in one pass:
+
+1.  Substitute __REPLACE_<basename>__ placeholders in source CSVs with public
+    raw.githubusercontent.com URLs that point at PNGs already pushed to the
+    Spark-Careers/social-assets repo.
+
+2.  Rewrite the source schema ('Date','Time','Text','Image URL','Tags') into
+    Buffer's actual bulk-upload schema ('text','image_url','tags','posting_time').
+    Date + Time get combined into a single 'YYYY-MM-DD HH:MM' posting_time
+    string. (Buffer interprets it in the channel's configured timezone.)
 
 Usage:
     python finalize_buffer_csvs.py --week 2026-W22 \
         --input  "C:/.../spark-w22-drive-bundle/buffer" \
         --output "C:/.../spark-w22-drive-bundle/buffer"
-
-The PNG folder is auto-derived from --week (YYYY/Wnn relative to this repo).
 """
 
 from __future__ import annotations
 
 import argparse
+import csv
 import re
 import sys
 from pathlib import Path
@@ -26,51 +32,62 @@ RAW_URL_BASE = f"https://raw.githubusercontent.com/{REPO_OWNER}/{REPO_NAME}/{BRA
 
 WEEK_RE = re.compile(r"^(\d{4})-W(\d{1,2})$")
 
+BUFFER_FIELDS = ["text", "image_url", "tags", "posting_time"]
+
 
 def parse_week(week: str) -> tuple[str, str]:
-    """Return (year, 'Wnn') from a '2026-W22' style tag."""
     m = WEEK_RE.match(week)
     if not m:
         sys.exit(f"--week must look like '2026-W22', got: {week!r}")
-    year, num = m.group(1), m.group(2).zfill(2)
-    return year, f"W{num}"
+    return m.group(1), f"W{m.group(2).zfill(2)}"
 
 
 def build_url_map(png_dir: Path, repo_rel: str) -> dict[str, str]:
-    """Map PNG basename (no .png) -> public raw URL."""
-    urls = {}
-    for png in sorted(png_dir.glob("*.png")):
-        basename = png.stem
-        urls[basename] = f"{RAW_URL_BASE}/{repo_rel}/{png.name}"
-    return urls
+    return {
+        png.stem: f"{RAW_URL_BASE}/{repo_rel}/{png.name}"
+        for png in sorted(png_dir.glob("*.png"))
+    }
 
 
-def finalize_csv(src: Path, dst: Path, urls: dict[str, str]) -> int:
-    """Substitute placeholders in src, write to dst. Returns replacement count."""
-    text = src.read_text(encoding="utf-8")
-    count = 0
+def substitute_url(raw_cell: str, urls: dict[str, str]) -> tuple[str, bool]:
+    """Swap a placeholder image URL for the GitHub raw URL. Returns (new, changed)."""
     for basename, url in urls.items():
-        # Two placeholder forms shipped in the original bundle:
-        #   __REPLACE_<basename>__   (plain marker)
-        #   https://drive.google.com/uc?export=view&id=__REPLACE_<basename>__
-        # We replace the entire Drive URL form first (so the host swap is clean),
-        # then fall back to the plain marker form.
         drive_form = f"https://drive.google.com/uc?export=view&id=__REPLACE_{basename}__"
         plain_form = f"__REPLACE_{basename}__"
+        if drive_form in raw_cell:
+            return raw_cell.replace(drive_form, url), True
+        if plain_form in raw_cell:
+            return raw_cell.replace(plain_form, url), True
+    return raw_cell, False
 
-        new_text = text.replace(drive_form, url)
-        if new_text != text:
-            count += 1
-            text = new_text
-            continue
 
-        new_text = text.replace(plain_form, url)
-        if new_text != text:
-            count += 1
-            text = new_text
+def finalize_csv(src: Path, dst: Path, urls: dict[str, str]) -> tuple[int, int]:
+    """Returns (rows_written, image_replacements)."""
+    rows_out = []
+    replacements = 0
 
-    dst.write_text(text, encoding="utf-8")
-    return count
+    with src.open("r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            new_image, changed = substitute_url(row.get("Image URL", ""), urls)
+            if changed:
+                replacements += 1
+
+            posting_time = f"{row.get('Date', '').strip()} {row.get('Time', '').strip()}".strip()
+
+            rows_out.append({
+                "text": row.get("Text", ""),
+                "image_url": new_image,
+                "tags": row.get("Tags", ""),
+                "posting_time": posting_time,
+            })
+
+    with dst.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=BUFFER_FIELDS, quoting=csv.QUOTE_ALL)
+        writer.writeheader()
+        writer.writerows(rows_out)
+
+    return len(rows_out), replacements
 
 
 def main() -> None:
@@ -105,15 +122,18 @@ def main() -> None:
     if not csvs:
         sys.exit(f"No source 'buffer' CSVs found in {args.input}")
 
-    total = 0
+    total_rows = 0
+    total_replacements = 0
     for src in csvs:
         dst = args.output / f"{src.stem}-final.csv"
-        n = finalize_csv(src, dst, urls)
-        total += n
-        print(f"  {src.name} -> {dst.name} ({n} placeholders replaced)")
+        rows, repl = finalize_csv(src, dst, urls)
+        total_rows += rows
+        total_replacements += repl
+        print(f"  {src.name} -> {dst.name} ({rows} rows, {repl} image URLs replaced)")
 
-    print(f"Done. {len(csvs)} CSV(s), {total} placeholder substitutions.")
-    print(f"Upload the *-final.csv files to Buffer (one per channel).")
+    print(f"Done. {len(csvs)} CSV(s), {total_rows} rows, "
+          f"{total_replacements} image URL substitutions.")
+    print("Output schema: text,image_url,tags,posting_time (Buffer's bulk-upload format).")
 
 
 if __name__ == "__main__":
