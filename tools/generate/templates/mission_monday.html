@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  body { background: var(--risepoint-navy); color: var(--text-light); }
+
+  /* Top-left: theme tag */
+  .theme-tag {
+    position: absolute;
+    top: var(--pad);
+    left: var(--pad);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--risepoint-saffron);
+  }
+  .theme-tag .bar {
+    width: 5px;
+    height: 22px;
+    background: var(--risepoint-saffron);
+  }
+
+  /* Top-right: saffron slab + wordmark badge */
+  .slab {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 380px;
+    height: 280px;
+    background: var(--risepoint-saffron);
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+  }
+  .wordmark-badge {
+    position: absolute;
+    top: 220px;
+    right: var(--pad);
+    background: var(--risepoint-navy);
+    padding: 18px 24px 18px 28px;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    line-height: 1.15;
+    color: var(--text-light);
+  }
+  .wordmark-badge .accent {
+    color: var(--risepoint-saffron);
+  }
+
+  /* Headline area */
+  .body-area {
+    position: absolute;
+    top: 400px;
+    left: var(--pad);
+    right: var(--pad);
+  }
+  .body-area .headline { color: var(--text-light); }
+  .body-area .headline .accent { color: var(--risepoint-saffron); }
+  .body-area .subline {
+    margin-top: 28px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* Rising bars motif (bottom-right) */
+  .rising-bars {
+    position: absolute;
+    bottom: 200px;
+    right: var(--pad);
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 90px;
+  }
+  .rising-bars .bar {
+    width: 14px;
+    background: var(--risepoint-saffron);
+  }
+  .rising-bars .bar:nth-child(1) { height: 25%; }
+  .rising-bars .bar:nth-child(2) { height: 45%; }
+  .rising-bars .bar:nth-child(3) { height: 70%; }
+  .rising-bars .bar:nth-child(4) { height: 100%; }
+
+  /* Horizontal rule above footer */
+  .rule {
+    position: absolute;
+    left: var(--pad);
+    right: var(--pad);
+    bottom: 165px;
+    height: 1.5px;
+    background: var(--risepoint-saffron);
+  }
+
+  /* Footer */
+  .footer-wordmark {
+    font-weight: 900;
+    font-size: 24px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--text-light);
+  }
+  .footer-wordmark .accent { color: var(--risepoint-saffron); }
+  .footer-meta { color: rgba(255,255,255,0.55); margin-top: 8px; }
+  .footer-url { color: var(--risepoint-saffron); }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="theme-tag">
+    <div class="bar"></div>
+    <div class="overline">{{THEME_TAG}}</div>
+  </div>
+
+  <div class="slab"></div>
+  <div class="wordmark-badge">RISEPOINT<br><span class="accent">CAREERS</span></div>
+
+  <div class="body-area">
+    <div class="headline">{{HEADLINE_HTML}}</div>
+    <div class="subline">{{SUBLINE}}</div>
+  </div>
+
+  <div class="rising-bars">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-wordmark">RISEPOINT<span class="accent">CAREERS</span></div>
+      <div class="footer-meta">{{FOOTER_META}}</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-url">{{URL}}</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

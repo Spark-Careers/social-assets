@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  body { background: var(--spark-arsenic); color: var(--text-light); }
+
+  .theme-tag {
+    position: absolute;
+    top: var(--pad);
+    left: var(--pad);
+    color: var(--spark-cadet);
+  }
+  .theme-tag::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--spark-cadet);
+    margin-top: 14px;
+  }
+
+  /* Giant ghost quotation mark */
+  .quote-mark {
+    position: absolute;
+    top: 200px;
+    left: var(--pad);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 280px;
+    line-height: 0.8;
+    color: rgba(255,255,255,0.13);
+    user-select: none;
+  }
+
+  .body-area {
+    position: absolute;
+    top: 400px;
+    left: var(--pad);
+    right: var(--pad);
+  }
+  .body-area .headline { color: var(--text-light); }
+  .body-area .headline .accent { color: var(--spark-cadet); }
+  .body-area .rule-short {
+    width: 80px;
+    height: 3px;
+    background: var(--spark-cadet);
+    margin-top: 30px;
+  }
+  .body-area .subline {
+    margin-top: 28px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* Footer */
+  .logo-spark { width: 220px; }
+  .footer-meta { color: rgba(255,255,255,0.55); }
+  .footer-url { color: var(--spark-cadet); font-size: 24px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="theme-tag overline">{{THEME_TAG}}</div>
+
+  <div class="quote-mark">&ldquo;</div>
+
+  <div class="body-area">
+    <div class="headline">{{HEADLINE_HTML}}</div>
+    <div class="rule-short"></div>
+    <div class="subline">{{SUBLINE}}</div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <img class="logo-spark cream" src="assets/spark-logo.png" alt="Spark Careers">
+      <div class="footer-meta">{{FOOTER_META}}</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-url">{{URL}}</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

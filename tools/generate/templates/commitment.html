@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  body { background: var(--spark-arsenic); color: var(--text-light); }
+
+  .theme-tag {
+    position: absolute;
+    top: var(--pad);
+    left: var(--pad);
+    color: var(--spark-cadet);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .theme-tag .lead-rule {
+    width: 32px;
+    height: 2px;
+    background: var(--spark-cadet);
+  }
+
+  /* Dot pattern (top-right) */
+  .dot-pattern {
+    position: absolute;
+    top: 70px;
+    right: var(--pad);
+    width: 240px;
+    height: 240px;
+    background-image: radial-gradient(rgba(73,154,169,0.45) 2px, transparent 2.5px);
+    background-size: 22px 22px;
+  }
+
+  .body-area {
+    position: absolute;
+    top: 350px;
+    left: var(--pad);
+    right: var(--pad);
+  }
+  .body-area .headline { color: var(--text-light); }
+  .body-area .headline .accent { color: var(--spark-cadet); }
+  .body-area .subline {
+    margin-top: 36px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* Mid-bottom short rule */
+  .mid-rule {
+    position: absolute;
+    bottom: 250px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--spark-cadet);
+  }
+
+  /* Footer */
+  .logo-spark { width: 220px; }
+  .footer-meta { color: rgba(255,255,255,0.55); }
+  .footer-url { color: var(--spark-cadet); font-size: 24px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="theme-tag">
+    <div class="lead-rule"></div>
+    <div class="overline">{{THEME_TAG}}</div>
+  </div>
+
+  <div class="dot-pattern"></div>
+
+  <div class="body-area">
+    <div class="headline">{{HEADLINE_HTML}}</div>
+    <div class="subline">{{SUBLINE}}</div>
+  </div>
+
+  <div class="mid-rule"></div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <img class="logo-spark cream" src="assets/spark-logo.png" alt="Spark Careers">
+      <div class="footer-meta">{{FOOTER_META}}</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-url">{{URL}}</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

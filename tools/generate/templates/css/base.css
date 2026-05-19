@@ -1,0 +1,108 @@
+/* Spark Careers / RisePoint Careers — shared base styles
+   1080x1350 (4:5). Designed to match Week 22 baseline. */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  /* RisePoint brand (Mission Monday) */
+  --risepoint-navy: #212D45;       /* Cloud Burst */
+  --risepoint-saffron: #FFAB30;    /* Deep Saffron */
+  --risepoint-cream: #F5F1E8;
+
+  /* Spark brand (Tue-Fri) */
+  --spark-arsenic: #414042;        /* charcoal */
+  --spark-cadet: #499AA9;          /* Cadet Blue */
+  --spark-cream: #F5F1E8;          /* light backgrounds */
+
+  /* Common text */
+  --text-light: #FFFFFF;
+  --text-light-muted: rgba(255,255,255,0.55);
+  --text-dark: #2A2A2C;
+  --text-dark-muted: rgba(42,42,44,0.65);
+
+  --canvas-w: 1080px;
+  --canvas-h: 1350px;
+  --pad: 80px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: var(--canvas-w); height: var(--canvas-h); overflow: hidden; }
+
+body {
+  font-family: 'Montserrat', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+.canvas {
+  position: relative;
+  width: var(--canvas-w);
+  height: var(--canvas-h);
+  padding: var(--pad);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Typography roles */
+.overline {
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.headline {
+  font-weight: 900;
+  font-size: 88px;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+}
+.subline {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.35;
+  letter-spacing: 0.005em;
+}
+.footer-label {
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+.footer-url {
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 0.005em;
+}
+.footer-meta {
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+
+/* Accent word helper */
+.accent { color: inherit; }
+
+/* Logo treatments */
+.logo-spark {
+  width: 200px;
+  height: auto;
+  display: block;
+}
+.logo-spark.cream {
+  filter: brightness(0) invert(1);
+}
+
+/* Footer common */
+.footer {
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  bottom: var(--pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.footer-left { display: flex; flex-direction: column; gap: 6px; }
+.footer-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }

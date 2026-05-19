@@ -11,30 +11,53 @@ Produces (or in Mode 1, produces the prompt to produce) the weekly content bundl
 
 ## Modes
 
-This skill currently runs in **Mode 1**. Mode 2 is a planned upgrade.
+**Mode 2 is live as of 2026-05-19.** The skill produces the full bundle natively in Claude Code (no claude.ai needed) via the Playwright + python-docx pipeline at `<repo>/tools/generate/`.
 
-- **Mode 1 — claude.ai relay (default until ~2026-W25):** Skill calculates the week's date range, embeds the full playbook below, and writes a self-contained prompt to `<social-assets-repo>/prompts/<week>-prompt.md`. The user opens claude.ai, pastes the prompt, attaches the brand-guide PDFs, and receives the bundle as a downloadable zip. We use claude.ai for now because brand-quality PNG generation isn't yet wired up in Claude Code.
-- **Mode 2 — Claude Code native (future):** After the Phase 3 visual-generation pipeline is built (Python + Pillow or HTML + Playwright templates), this skill will produce the full bundle locally without claude.ai. Defer until 3 consecutive weeks of Mode 1 output have been reviewed and the style is locked.
+- **Mode 2 (default):** The skill's *operational* path is the Python orchestrator `tools/generate/run_weekly.py`. When invoked, it generates captions (via `claude --print`), renders 10 PNGs via Playwright + Chromium, writes the DOCX, writes 3 CSVs, pushes PNGs to GitHub, runs `finalize_buffer_csvs.py`, and pops a Windows toast notification when the 3 final CSVs are ready in `Downloads/spark-w{NN}-buffer/`. Runs autonomously via Windows Task Scheduler every Friday 08:30 America/Edmonton.
+- **Mode 1 (manual fallback):** If Mode 2 fails for some reason (broken Playwright install, Claude auth issue, etc.), the skill can fall back to writing a claude.ai-ready prompt to `<repo>/prompts/<week>-prompt.md` for the user to paste into a fresh claude.ai chat.
 
 ## How to invoke
 
+**Autonomous (default — set up once):** Windows Task Scheduler fires Friday 08:30 America/Edmonton, runs the pipeline, drops 3 final CSVs in `Downloads\spark-w{NN}-buffer\`, pops a toast. User uploads CSVs to Buffer.
+
+**Manual one-shot:**
+```powershell
+cd "C:\Users\HP\Desktop\Personal Docs\Post Shell Projects\IdleSpark\Marketing\social-assets"
+python tools\generate\run_weekly.py                    # next-week, default
+python tools\generate\run_weekly.py --year 2026 --week 23   # specific week
+python tools\generate\run_weekly.py --skip-push        # dry-run
+```
+
+**As a Claude Code skill (slash command):**
 ```
 /spark-weekly-content 2026-W23
 ```
+The skill invokes `run_weekly.py` for the given week.
 
-If the week argument is missing, default to the ISO week starting the next Monday after today.
+## Step-by-step for the agent (Mode 2 — default)
 
-## Step-by-step for the agent (Mode 1)
+1. **Parse the week argument.** Format `YYYY-WNN`. If missing, default to the ISO week starting the next Monday.
+2. **Refuse to overwrite a past week's outputs** unless the user explicitly confirms.
+3. **Optionally do a research pass** if the user provided one or if the agent decides to. Use WebSearch for: SMB hiring trends, US/Canada job-market reports, ATS news, AI-in-resumes discourse from the past 7 days. Pick 2–3 hooks. Pass them as `--research "…"`.
+4. **Invoke the orchestrator:**
+   ```bash
+   cd /path/to/social-assets
+   python tools/generate/run_weekly.py --year YYYY --week NN [--research "…"]
+   ```
+5. **Watch the log.** Stream `runs/{week-label}.log`. If it succeeds:
+   - 10 PNGs are in `2026/W{NN}/` and pushed to GitHub
+   - 3 final CSVs + docx are in `Downloads/spark-w{NN}-buffer/`
+   - Windows toast notification fires
+6. **Tell the user** the bundle is ready and where to find it. Remind them the only manual step is the Buffer bulk upload (3 CSVs, one per channel).
 
-1. **Parse the week.** Compute Monday and Friday of the given ISO week. Verify the week is in the future or current — refuse to generate for a past week unless the user explicitly confirms.
-2. **Optionally do a research pass.** Use WebSearch to scan headlines from the past 7 days on: SMB hiring trends, US/Canada job market reports, layoffs/hiring waves at big tech, ATS news, AI-in-resumes news, career-change discourse. Pick 2–3 hooks worth referencing in captions. Skip if the user says "skip research" or if the session is offline.
-3. **Compose the prompt.** Use the template at the bottom of this file (`PROMPT_TEMPLATE`). Fill placeholders with the week's specifics (dates, week label, current rotation lens for Mission Monday, research hooks if any).
-4. **Save the prompt** to `<repo-root>/prompts/<week>-prompt.md`. Repo root is the local clone of `Spark-Careers/social-assets` — check the memory file `social-buffer-workflow.md` for the path (typically `IdleSpark/Marketing/social-assets/`).
-5. **Tell the user** the prompt is ready, what to do with it, and what to do after the bundle arrives. Include the exact post-arrival sequence (push PNGs to repo → run finalize script → bulk-upload CSVs to Buffer).
+## Step-by-step for the agent (Mode 1 — fallback)
 
-## Step-by-step for the agent (Mode 2 — placeholder until built)
+Only use if Mode 2 has a hard blocker (Playwright broken, `claude --print` auth issue you can't fix on the spot, etc.).
 
-> Not yet implemented. When implemented, this section will describe: load brand assets from `IdleSpark/Branding Files/`, instantiate the 5 layout templates, render PNGs, generate captions per the playbook, write docx via the docx skill, write CSVs via the finalize script, push to GitHub. Until then, fall back to Mode 1.
+1. **Parse the week**, compute dates, calculate Mission Monday lens.
+2. **Compose the claude.ai prompt** using the template at the bottom of this file. Fill placeholders.
+3. **Save it** to `<repo>/prompts/<week>-prompt.md`.
+4. **Tell the user** to open claude.ai, paste the prompt, attach Brand Guide PDFs from `IdleSpark/Branding Files/`, then follow the post-arrival operational sequence (push PNGs to repo → run finalize script → bulk-upload CSVs to Buffer).
 
 ---
 

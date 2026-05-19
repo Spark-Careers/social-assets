@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  body { background: var(--spark-cream); color: var(--spark-arsenic); }
+
+  /* Top cream panel (55%) */
+  .top-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 745px;
+    padding: var(--pad);
+    padding-bottom: 0;
+    background: var(--spark-cream);
+  }
+
+  /* Theme tab (cadet rectangle with white text) */
+  .theme-tab {
+    display: inline-block;
+    background: var(--spark-cadet);
+    color: var(--text-light);
+    padding: 12px 26px;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+  }
+
+  .overline-label {
+    margin-top: 26px;
+    color: var(--text-dark-muted);
+    letter-spacing: 0.18em;
+  }
+
+  .headline {
+    margin-top: 18px;
+    color: var(--spark-arsenic);
+    font-size: 84px;
+  }
+  .headline .accent { color: var(--spark-cadet); }
+
+  /* Bottom cadet panel (45%) */
+  .bottom-panel {
+    position: absolute;
+    top: 745px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--spark-cadet);
+    padding: 60px var(--pad);
+    color: var(--text-light);
+  }
+  .bottom-panel .try-now {
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.18em;
+    font-weight: 700;
+    font-size: 22px;
+  }
+  .url-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 18px;
+  }
+  .url-main {
+    font-weight: 800;
+    font-size: 56px;
+    letter-spacing: -0.01em;
+    color: var(--text-light);
+  }
+  .arrow {
+    width: 90px;
+    height: 6px;
+    background: var(--text-light);
+    position: relative;
+  }
+  .arrow::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: -16px;
+    width: 32px;
+    height: 32px;
+    border-top: 6px solid var(--text-light);
+    border-right: 6px solid var(--text-light);
+    transform: rotate(45deg);
+  }
+  .url-subline {
+    margin-top: 18px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    font-size: 22px;
+  }
+
+  /* Footer overlay */
+  .footer { color: var(--text-light); }
+  .logo-spark { width: 220px; }
+  .footer-meta { color: rgba(255,255,255,0.75); }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="top-panel">
+    <div class="theme-tab">{{THEME_TAG}}</div>
+    <div class="overline-label overline" style="font-size:18px;">{{OVERLINE}}</div>
+    <div class="headline">{{HEADLINE_HTML}}</div>
+  </div>
+
+  <div class="bottom-panel">
+    <div class="try-now">TRY IT NOW</div>
+    <div class="url-block">
+      <div class="url-main">{{URL}}</div>
+      <div class="arrow"></div>
+    </div>
+    <div class="url-subline">{{SUBLINE}}</div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <img class="logo-spark cream" src="assets/spark-logo.png" alt="Spark Careers">
+      <div class="footer-meta">{{FOOTER_META}}</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

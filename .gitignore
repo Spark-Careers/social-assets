@@ -1,0 +1,13 @@
+# Test renders (per-developer scratch)
+tools/generate/_test_renders/
+
+# Per-run logs (only useful locally)
+runs/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# OS junk
+.DS_Store
+Thumbs.db

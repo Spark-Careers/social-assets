@@ -21,19 +21,19 @@ RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-UID:spark-weekly-content-reminder@risepointcareers.com
-DTSTAMP:20260518T220000Z
-SUMMARY:Generate Spark Careers next-week content
-DESCRIPTION:Open Claude Code in IdleSpark/Marketing/social-assets and invoke /spark-weekly-content YYYY-W{next-week} to generate next week's social-post bundle.\n\nThe skill writes a prompt to prompts/. Paste it into a fresh claude.ai chat\, attach Brand Guide PDFs from IdleSpark/Branding Files/\, receive the bundle\, then follow the operational sequence in the skill file (push PNGs to repo\, run finalize script\, bulk-upload CSVs to Buffer).\n\nFirst occurrence: Fri May 29 2026 - generate Week 23 (Jun 1-5).\nSkill location: ~/.claude/skills/spark-weekly-content/SKILL.md
-DTSTART;TZID=America/Edmonton:20260529T120000
-DTEND;TZID=America/Edmonton:20260529T121500
+UID:spark-weekly-content-bundle-ready@risepointcareers.com
+DTSTAMP:20260519T060000Z
+SUMMARY:Spark Careers next-week bundle should be ready in Downloads
+DESCRIPTION:The Windows scheduled task SparkCareers\\WeeklyContentBuild fired at 08:30 this morning and should have dropped the next week's bundle into Downloads\\spark-w{NN}-buffer\\.\n\nWhat to do now:\n  1. Open Downloads\\spark-w{NN}-buffer\\\n  2. Review the .docx if you want to edit any captions\n  3. Open Buffer\, for each channel: gear -> General -> Bulk Upload\, upload the matching *-final.csv\, review the preview\, confirm\n\nIf the folder isn't there\, the task failed -- check the latest log in social-assets\\runs\\wrapper-*.log and the toast notification history.\n\nFirst real run: Fri May 29 2026 (generates Week 23\, Jun 1-5).
+DTSTART;TZID=America/Edmonton:20260529T093000
+DTEND;TZID=America/Edmonton:20260529T094500
 RRULE:FREQ=WEEKLY;BYDAY=FR
-LOCATION:Claude Code
+LOCATION:Downloads\spark-w{week}-buffer\
 STATUS:CONFIRMED
-TRANSP:OPAQUE
+TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Time to generate next week's Spark social content
+DESCRIPTION:Check Downloads for this week's Spark bundle and upload to Buffer
 TRIGGER:-PT0M
 END:VALARM
 END:VEVENT
