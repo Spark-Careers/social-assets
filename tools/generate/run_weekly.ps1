@@ -35,7 +35,10 @@ $env:USERPROFILE = $env:USERPROFILE
 
 try {
     Set-Location $RepoRoot
-    & $PythonExe $Script 2>&1 | Tee-Object -FilePath $Logfile -Append
+    # Force Python to emit UTF-8 so the log file is readable
+    $env:PYTHONIOENCODING = "utf-8"
+    $env:PYTHONUTF8 = "1"
+    & $PythonExe $Script 2>&1 | ForEach-Object { $_.ToString() } | Tee-Object -FilePath $Logfile -Append -Encoding utf8
     $exit = $LASTEXITCODE
     "" | Out-File -FilePath $Logfile -Encoding utf8 -Append
     "=== Wrapper finished $(Get-Date -Format 'u') exit=$exit ===" | Out-File -FilePath $Logfile -Encoding utf8 -Append

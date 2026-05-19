@@ -126,8 +126,15 @@ def generate_captions(year: int, week_num: int, week_label: str,
         timeout=timeout_seconds,
     )
     if proc.returncode != 0:
-        sys.stderr.write(proc.stderr or "(no stderr)\n")
-        raise RuntimeError(f"claude exited {proc.returncode}")
+        sys.stderr.write("=== claude --print FAILED ===\n")
+        sys.stderr.write(f"exit code: {proc.returncode}\n")
+        sys.stderr.write(f"stderr:\n{proc.stderr or '(empty)'}\n")
+        sys.stderr.write(f"stdout (first 4KB):\n{(proc.stdout or '(empty)')[:4096]}\n")
+        sys.stderr.write("=== end claude failure ===\n")
+        raise RuntimeError(
+            f"claude --print exited {proc.returncode}. "
+            f"stdout starts: {(proc.stdout or '')[:200]!r}"
+        )
 
     json_text = extract_json_array(proc.stdout)
     captions = json.loads(json_text)
