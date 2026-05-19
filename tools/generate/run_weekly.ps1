@@ -31,6 +31,22 @@ $env:USERPROFILE = $env:USERPROFILE
 "Python:    $PythonExe"        | Out-File -FilePath $Logfile -Encoding utf8 -Append
 "Script:    $Script"           | Out-File -FilePath $Logfile -Encoding utf8 -Append
 "Repo root: $RepoRoot"         | Out-File -FilePath $Logfile -Encoding utf8 -Append
+
+# Resolve the Claude OAuth token for headless `claude --print` invocations.
+# Task Scheduler often strips user-scope env vars even with InteractiveToken,
+# so we re-read it from the user registry hive directly.
+$OauthToken = [System.Environment]::GetEnvironmentVariable("CLAUDE_CODE_OAUTH_TOKEN", "User")
+if (-not $OauthToken) {
+    $OauthToken = $env:CLAUDE_CODE_OAUTH_TOKEN
+}
+if (-not $OauthToken) {
+    "ERROR: CLAUDE_CODE_OAUTH_TOKEN is not set." | Out-File -FilePath $Logfile -Encoding utf8 -Append
+    "Run 'claude setup-token' once interactively, then set the result as a User env var:" | Out-File -FilePath $Logfile -Encoding utf8 -Append
+    "  [System.Environment]::SetEnvironmentVariable('CLAUDE_CODE_OAUTH_TOKEN', '<token>', 'User')" | Out-File -FilePath $Logfile -Encoding utf8 -Append
+    exit 2
+}
+$env:CLAUDE_CODE_OAUTH_TOKEN = $OauthToken
+"OAuth:     CLAUDE_CODE_OAUTH_TOKEN is set (length $($OauthToken.Length))" | Out-File -FilePath $Logfile -Encoding utf8 -Append
 ""                              | Out-File -FilePath $Logfile -Encoding utf8 -Append
 
 try {
