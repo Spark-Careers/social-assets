@@ -47,11 +47,28 @@ from renderer import render_post_simple
 
 
 def default_target_week(today: date | None = None) -> tuple[int, int, str]:
-    """Default: the ISO week starting NEXT Monday."""
+    """Default: the ISO week that begins at least 7 days from today.
+
+    Rationale: when the autonomous run fires on Friday at 08:30, the next
+    Monday is only 3 days away — not enough lead time to review and
+    bulk-upload before Mon 08:00 posts go live. Adding the 7-day floor means
+    Friday's delivery is always for Monday-after-next (10 days out), giving
+    a full weekend + week to review.
+
+    Examples:
+      today = Tue May 19  -> next Mon = May 25 (6 days), skip -> Mon Jun 1 = W23
+      today = Fri May 22  -> next Mon = May 25 (3 days), skip -> Mon Jun 1 = W23
+      today = Sun May 24  -> next Mon = May 25 (1 day),  skip -> Mon Jun 1 = W23
+      today = Mon May 25  -> next Mon = Jun 1  (7 days), keep -> W23
+      today = Tue May 26  -> next Mon = Jun 1  (6 days), skip -> Mon Jun 8 = W24
+    """
     today = today or date.today()
+    # Find the first Monday that is >= 7 days from today.
     days_until_next_mon = (7 - today.weekday()) % 7 or 7
-    next_monday = today + timedelta(days=days_until_next_mon)
-    year, week, _ = next_monday.isocalendar()
+    candidate = today + timedelta(days=days_until_next_mon)
+    if (candidate - today).days < 7:
+        candidate += timedelta(days=7)
+    year, week, _ = candidate.isocalendar()
     return year, week, f"{year}-W{week:02d}"
 
 
