@@ -67,7 +67,7 @@ Only use if Mode 2 has a hard blocker (Playwright broken, `claude --print` auth 
 
 | Product | Audience | URL | Free trial |
 |---|---|---|---|
-| Spark Careers (B2C) | Job seekers — resume/ATS optimization, CV rewrites | `spark.stepupcareers.com` (migrating to `spark.risepointcareers.com`) | n/a, freemium |
+| Spark Careers (B2C) | Job seekers (resume/ATS optimization, CV rewrites) | `spark.risepointcareers.com` (cutover from `spark.stepupcareers.com` completed 2026-05-31) | n/a, freemium |
 | Spark Careers Enterprise (B2B) | 0–20 person founder-led SMBs needing a lightweight ATS | `hire.risepointcareers.com` | 7-day free trial |
 
 Parent: **RisePoint Careers Corp.** Marketing site: `risepointcareers.com`.
@@ -83,10 +83,12 @@ Parent: **RisePoint Careers Corp.** Marketing site: `risepointcareers.com`.
 - **Voice:** Corporate-professional with an inspirational undercurrent. Plain-spoken, not buzzwordy. Slightly different register per audience (see above).
 - **No emojis. Anywhere.**
 - **No exclamation points** unless quoting someone.
+- **No em-dashes (`—`), en-dashes (`–`), or double-hyphens (`--`) anywhere — visuals or captions.** Use periods, commas, parentheses, or sentence breaks instead. (Hyphens inside compound words like "founder-led" are fine.)
+- **Captions spell out contractions.** Use "do not" / "we have" / "you are" / "it is" instead of "don't" / "we've" / "you're" / "it is". Headlines in visuals may use natural language but lean toward the spelled-out form for consistency.
 - Reading level: ~grade 9. Short sentences. Sentence fragments OK when intentional.
 - Avoid: "leverage", "synergy", "game-changer", "revolutionary", "unleash", "supercharge". Avoid stacking adjectives.
 - B2C: address the reader directly ("you", "your CV"). Acknowledge frustration without wallowing in it.
-- B2C never says "you failed" — the system filtered you out.
+- B2C never says "you failed". The system filtered you out.
 - B2B: acknowledge the operator's reality (running everything else; hiring between client calls). Never moralize about how they "should have" done it differently.
 
 ### Two brand systems
@@ -262,7 +264,7 @@ The bundle must match the Week 22 baseline exactly. Below is the full playbook �
 ============================================================
 PRODUCTS
 ============================================================
-- Spark Careers (B2C): job-seeker tool — resume review, ATS optimization, CV rewrites. URL: spark.stepupcareers.com (moving to spark.risepointcareers.com).
+- Spark Careers (B2C): job-seeker tool (resume review, ATS optimization, CV rewrites). URL: spark.risepointcareers.com (cutover from spark.stepupcareers.com completed 2026-05-31).
 - Spark Careers Enterprise (B2B): lightweight ATS for 0–20-person founder-led SMBs. URL: hire.risepointcareers.com. 7-day free trial.
 - Parent: RisePoint Careers Corp. Marketing site: risepointcareers.com.
 

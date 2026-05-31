@@ -54,10 +54,25 @@ try {
     # Force Python to emit UTF-8 so the log file is readable
     $env:PYTHONIOENCODING = "utf-8"
     $env:PYTHONUTF8 = "1"
-    & $PythonExe $Script 2>&1 | ForEach-Object { $_.ToString() } | Tee-Object -FilePath $Logfile -Append -Encoding utf8
-    $exit = $LASTEXITCODE
-    "" | Out-File -FilePath $Logfile -Encoding utf8 -Append
-    "=== Wrapper finished $(Get-Date -Format 'u') exit=$exit ===" | Out-File -FilePath $Logfile -Encoding utf8 -Append
+
+    # PowerShell 5.1's Tee-Object does NOT accept -Encoding. Use an explicit
+    # StreamWriter so we get real UTF-8 and still mirror to the console.
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    $writer = New-Object System.IO.StreamWriter($Logfile, $true, $utf8NoBom)
+    try {
+        & $PythonExe $Script 2>&1 | ForEach-Object {
+            $line = $_.ToString()
+            Write-Host $line
+            $writer.WriteLine($line)
+            $writer.Flush()
+        }
+        $exit = $LASTEXITCODE
+        $writer.WriteLine("")
+        $writer.WriteLine("=== Wrapper finished $(Get-Date -Format 'u') exit=$exit ===")
+    }
+    finally {
+        $writer.Close()
+    }
     exit $exit
 }
 catch {

@@ -50,9 +50,14 @@ This week's specifics:
 - Mission Monday lens: **{lens}** (mission|problem|origin rotation, calculated for week {week_num})
 - Tuesday is Trade Secret NO. {nn} (use the week number as the badge number)
 - B2B URL: https://hire.risepointcareers.com/
-- B2C URL: https://spark.stepupcareers.com/
+- B2C URL: https://spark.risepointcareers.com/
 - UTM template: ?utm_source=social&utm_medium=post&utm_campaign=w{nn}-{{day}}-{{audience}}
 - All B2B posts post at 08:00, all B2C posts at 12:00 (America/Edmonton).
+
+STYLE RULES (hard constraints, no exceptions):
+- NO em-dashes ("—"), NO en-dashes ("–"), NO double-hyphens ("--") anywhere in headlines, sublines, or captions. Use periods, commas, parentheses, or sentence breaks instead. (Hyphens inside hyphenated compound words like "founder-led" are fine.)
+- Captions spell out contractions in full: "do not" not "don't", "we have" not "we've", "you are" not "you're", "it is" not "it's", "will not" not "won't", "did not" not "didn't", "I am" not "I'm". Possessives like "founder's" stay as-is.
+- Visual headlines should also lean toward the spelled-out form for consistency. Default to spelling them out unless a contraction is the only natural way the line scans.
 
 Research hooks for this week (use 1-3 where they genuinely fit, never shoehorn):
 {research_hooks or "(no research hooks supplied — skip the seasonal/news reference)"}
@@ -71,7 +76,7 @@ Each object MUST have exactly these keys:
   "headline": "Short impactful headline. 8-16 words. Sentence case. Period at end.",
   "highlights": ["word1", "word2"]  -- 1 to 2 words from the headline to color-accent. Pick visually-anchoring words. The last word/phrase of the headline often works best. Match casing exactly to the headline.,
   "subline": "Single support line. 6-12 words. Sometimes empty string is OK on Trade Secrets.",
-  "url": "hire.risepointcareers.com" for B2B, "spark.stepupcareers.com" for B2C,
+  "url": "hire.risepointcareers.com" for B2B, "spark.risepointcareers.com" for B2C,
   "footer_meta": "For employers · Spark Careers Enterprise" for B2B, "For job seekers · Spark Careers" for B2C,
   "caption_linkedin": "Full LinkedIn caption ending with the tracked URL inline. 100-500 words depending on B2B/B2C. Plain-spoken, no emojis, no exclamation points unless quoting. The tracked URL goes inline at the end and uses the UTM template above.",
   "caption_facebook": "Full Facebook caption. 80-200 words. Tracked URL inline at end.",
