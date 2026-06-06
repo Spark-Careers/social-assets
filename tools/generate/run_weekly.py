@@ -138,7 +138,9 @@ def main() -> int:
         if args.skip_captions and captions_path.exists():
             import json
             log(f"[captions] reusing {captions_path}", log_handle=log_h)
-            captions = __import__("json").loads(captions_path.read_text(encoding="utf-8"))
+            payload = json.loads(captions_path.read_text(encoding="utf-8"))
+            # Accept both new {_research, captions} object and legacy bare-array forms
+            captions = payload["captions"] if isinstance(payload, dict) and "captions" in payload else payload
         else:
             captions = generate_captions(year, week_num, week_label,
                                           args.research, captions_path)

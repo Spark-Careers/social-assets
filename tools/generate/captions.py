@@ -59,10 +59,55 @@ STYLE RULES (hard constraints, no exceptions):
 - Captions spell out contractions in full: "do not" not "don't", "we have" not "we've", "you are" not "you're", "it is" not "it's", "will not" not "won't", "did not" not "didn't", "I am" not "I'm". Possessives like "founder's" stay as-is.
 - Visual headlines should also lean toward the spelled-out form for consistency. Default to spelling them out unless a contraction is the only natural way the line scans.
 
-Research hooks for this week (use 1-3 where they genuinely fit, never shoehorn):
-{research_hooks or "(no research hooks supplied — skip the seasonal/news reference)"}
+================================================================
+MANDATORY RESEARCH PASS BEFORE YOU COMPOSE ANYTHING
+================================================================
 
-Now output **ONLY** a JSON array of 10 caption objects. No markdown code fences. No preamble. No commentary after. Just the JSON.
+User has explicitly flagged on W23 that evergreen-only content is not acceptable. This research pass is a HARD REQUIREMENT, not a "nice to have". Do not skip it.
+
+STEP 1 — Run AT LEAST 4 WebSearch calls covering these axes:
+  (a) Current job-market headlines ("SMB hiring [current month] 2026", "new grad hiring 2026", "BLS JOLTS 2026", "layoff news this week")
+  (b) ATS / AI-in-hiring discourse ("applicant tracking system 2026 news", "AI resume rejection 2026", "EU AI Act hiring", "NYC Local Law 144")
+  (c) B2B competitor watch (BambooHR, Workable, Greenhouse, JazzHR, Manatal — feature launches, blog posts, announcements this week)
+  (d) B2C competitor watch (Jobright.ai, Teal, Jobscan, Kickresume, Rezi — same)
+
+STEP 2 — Identify 3 to 5 concrete hooks. A hook is one of:
+  - A specific number from a reputable source ("75 percent of resumes...", "974,000 new grads...", "5.6 percent YoY hiring uptick")
+  - A recent news item (a product launch, a regulatory change, a layoff wave)
+  - A competitor move worth referencing or contrasting against
+  - A seasonal moment ripe for this specific week (grad season, Q3 hiring start, holiday wind-down)
+
+Log each hook with its source URL.
+
+STEP 3 — Anchor AT LEAST 5 of the 10 captions to one of those hooks.
+  - Both Mission Monday posts MUST be anchored (this slot most needs current relevance).
+  - Spread the rest across at least one other day's pair.
+  - For an anchored caption: weave the hook naturally into the first 2-3 sentences. Do not bolt it on at the end.
+
+STEP 4 — Pre-pend a `_research` sidecar to the output. The output is now an OBJECT, not an array:
+
+{{
+  "_research": {{
+    "performed_at": "<ISO-8601 timestamp of when you ran the searches>",
+    "hooks": [
+      {{"hook": "short description", "source": "https://..." }},
+      ...
+    ],
+    "anchored_posts": ["mon-b2b", "mon-b2c", "tue-b2b", ...]   // MUST contain at least 5 entries, and MUST include both mon-b2b and mon-b2c
+  }},
+  "captions": [ ...10 caption objects in the schema below... ]
+}}
+
+ANTI-SHOEHORN RULE: if a hook genuinely does not fit a specific post, leave that post evergreen. The 5-of-10 minimum is the floor. Better to ship 5 anchored + 5 evergreen than 10 forced.
+
+If you cannot find 3 usable hooks after the research pass, STOP and write to stdout: `RESEARCH_INSUFFICIENT: <explanation>` and exit. Do not ship an evergreen-only bundle.
+
+Research hooks already supplied (if any, treat as a starting point — still do your own research):
+{research_hooks or "(none supplied — do all research yourself)"}
+
+================================================================
+
+Now output the JSON OBJECT (NOT a bare array). No markdown code fences. No preamble. No commentary after. Just the JSON object with `_research` and `captions` keys.
 
 The 10 objects in order: mon-b2b, mon-b2c, tue-b2b, tue-b2c, wed-b2b, wed-b2c, thu-b2b, thu-b2c, fri-b2b, fri-b2c.
 
@@ -94,16 +139,40 @@ If caption_instagram is non-empty, it MUST be a B2C post AND "instagram" must be
 Output the JSON array now. Nothing else."""
 
 
-def extract_json_array(text: str) -> str:
-    """Pull the first JSON array out of Claude's stdout, stripping any markdown fences."""
-    fenced = re.search(r"```(?:json)?\s*(\[.*?\])\s*```", text, re.DOTALL)
-    if fenced:
-        return fenced.group(1)
-    start = text.find("[")
+def extract_json_payload(text: str) -> str:
+    """Pull the first JSON object (or legacy bare array) out of Claude's stdout."""
+    # Check for explicit research-insufficient signal
+    if "RESEARCH_INSUFFICIENT" in text:
+        raise RuntimeError(
+            "Agent reported RESEARCH_INSUFFICIENT — refusing to ship evergreen-only bundle. "
+            "Re-run with --research providing hooks manually, or investigate why the WebSearch returned nothing useful."
+        )
+    # Strip markdown fences
+    fenced_obj = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", text, re.DOTALL)
+    if fenced_obj:
+        return fenced_obj.group(1)
+    fenced_arr = re.search(r"```(?:json)?\s*(\[.*?\])\s*```", text, re.DOTALL)
+    if fenced_arr:
+        return fenced_arr.group(1)
+    # Find the first balanced object or array
+    obj_start = text.find("{")
+    arr_start = text.find("[")
+    if obj_start == -1 and arr_start == -1:
+        raise ValueError("No JSON object or array found in Claude output")
+    # Prefer object form (current schema). Fall back to array (legacy).
+    if obj_start != -1 and (arr_start == -1 or obj_start < arr_start):
+        end = text.rfind("}")
+        if end == -1 or end < obj_start:
+            raise ValueError("Unterminated JSON object in Claude output")
+        return text[obj_start : end + 1]
     end = text.rfind("]")
-    if start == -1 or end == -1 or end < start:
-        raise ValueError("No JSON array found in Claude output")
-    return text[start : end + 1]
+    if end == -1 or end < arr_start:
+        raise ValueError("Unterminated JSON array in Claude output")
+    return text[arr_start : end + 1]
+
+
+# Backward compat: old name
+extract_json_array = extract_json_payload
 
 
 def generate_captions(year: int, week_num: int, week_label: str,
@@ -141,19 +210,36 @@ def generate_captions(year: int, week_num: int, week_label: str,
             f"stdout starts: {(proc.stdout or '')[:200]!r}"
         )
 
-    json_text = extract_json_array(proc.stdout)
-    captions = json.loads(json_text)
+    json_text = extract_json_payload(proc.stdout)
+    payload = json.loads(json_text)
+
+    # Accept both new {_research, captions} object form and legacy bare array.
+    if isinstance(payload, dict) and "captions" in payload:
+        research = payload.get("_research") or {}
+        captions = payload["captions"]
+    elif isinstance(payload, list):
+        research = {}
+        captions = payload
+    else:
+        raise ValueError(f"Unexpected JSON shape: {type(payload).__name__}")
 
     if not isinstance(captions, list) or len(captions) != 10:
-        raise ValueError(f"Expected 10 caption objects, got {type(captions).__name__} len={len(captions) if hasattr(captions, '__len__') else '?'}")
+        raise ValueError(f"Expected 10 caption objects, got len={len(captions) if hasattr(captions, '__len__') else '?'}")
 
     validate_captions(captions)
+    validate_research(research)
 
     if output_path is not None:
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(json.dumps(captions, indent=2, ensure_ascii=False),
+        # Persist the full payload (research + captions) so downstream tools
+        # can audit which posts cite what.
+        out_payload = {"_research": research, "captions": captions} if research else captions
+        output_path.write_text(json.dumps(out_payload, indent=2, ensure_ascii=False),
                                 encoding="utf-8")
         print(f"[captions] wrote {output_path}")
+        if research:
+            anchored = research.get("anchored_posts", [])
+            print(f"[captions] research: {len(research.get('hooks', []))} hooks, {len(anchored)} anchored posts: {anchored}")
 
     return captions
 
@@ -168,7 +254,7 @@ EXPECTED_ORDER = [(d, a) for d in VALID_DAYS for a in ("b2b", "b2c")]
 
 
 def validate_captions(captions: list[dict]) -> None:
-    """Sanity-check schema and ordering."""
+    """Sanity-check schema, ordering, style rules, and dash discipline."""
     for i, c in enumerate(captions):
         missing = REQUIRED_KEYS - set(c.keys())
         if missing:
@@ -183,6 +269,52 @@ def validate_captions(captions: list[dict]) -> None:
             raise ValueError(f"caption {i} highlights must be a list")
         if not isinstance(c["channels"], list) or not c["channels"]:
             raise ValueError(f"caption {i} channels must be a non-empty list")
+
+        # Style rule: no em-dashes, en-dashes, or double-hyphens anywhere
+        for field in ("headline", "subline", "caption_linkedin",
+                      "caption_facebook", "caption_instagram"):
+            v = c.get(field) or ""
+            for bad, name in (("—", "em-dash"), ("–", "en-dash"), ("--", "double-hyphen")):
+                if bad in v:
+                    raise ValueError(
+                        f"caption {i} ({c['day']}-{c['audience']}) field {field} "
+                        f"contains forbidden {name}. Use periods/commas/parens instead."
+                    )
+
+
+def validate_research(research: dict) -> None:
+    """Enforce: research must be present with >= 3 hooks and >= 5 anchored posts
+    including both mon-b2b and mon-b2c. Soft warning for now; promote to hard
+    error once we trust the autonomous pipeline reliably populates this.
+    """
+    if not research:
+        sys.stderr.write(
+            "WARNING: bundle has no _research metadata. Captions may be evergreen. "
+            "User has flagged this as not acceptable.\n"
+        )
+        return
+
+    hooks = research.get("hooks") or []
+    anchored = research.get("anchored_posts") or []
+
+    issues = []
+    if len(hooks) < 3:
+        issues.append(f"only {len(hooks)} research hook(s); minimum is 3")
+    if len(anchored) < 5:
+        issues.append(f"only {len(anchored)} anchored post(s); minimum is 5")
+    if "mon-b2b" not in anchored:
+        issues.append("mon-b2b is not in anchored_posts (Mission Monday B2B MUST be anchored)")
+    if "mon-b2c" not in anchored:
+        issues.append("mon-b2c is not in anchored_posts (Mission Monday B2C MUST be anchored)")
+
+    for h in hooks:
+        if not isinstance(h, dict) or "hook" not in h or "source" not in h:
+            issues.append(f"malformed hook entry: {h!r} (need 'hook' and 'source')")
+            break
+
+    if issues:
+        msg = "Research pass insufficient:\n  - " + "\n  - ".join(issues)
+        sys.stderr.write(f"WARNING: {msg}\n")
 
 
 if __name__ == "__main__":
