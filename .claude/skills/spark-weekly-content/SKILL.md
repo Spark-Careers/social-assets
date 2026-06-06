@@ -218,16 +218,42 @@ python tools/finalize_buffer_csvs.py --week YYYY-W{NN} `
 #    One CSV per channel (LinkedIn, Facebook, Instagram).
 ```
 
-### Weekly research checklist
+### Weekly research pass — MANDATORY, NOT OPTIONAL
 
-Before composing captions, the agent should briefly check (via WebSearch):
+**This is a hard requirement, not a "nice to have."** Skipping it produces evergreen content that drifts further from current market reality every week. User has explicitly flagged this on W23 — going forward, no week ships without research-anchored captions.
 
-- **B2B competitor watch:** BambooHR, Workable, Greenhouse, JazzHR, Manatal — what are they posting/announcing this week?
-- **B2C competitor watch:** Jobright.ai, Teal, Jobscan, Kickresume, Rezi — feature launches, content angles?
-- **Job market headlines:** US/Canada SMB hiring data, layoff news, grad season, seasonal hiring waves (retail, hospitality, etc.)
-- **AI-in-hiring discourse:** anything trending about ATS, AI-generated CVs, employer pushback, etc.
+**Before composing any captions, the agent MUST do all of the following:**
 
-Pick 2–3 hooks worth referencing across the 10 posts. Don't shoehorn — if nothing is genuinely useful, skip the reference.
+1. **At least 4 WebSearch calls**, covering these axes:
+   - **Job market headlines this week:** US/Canada SMB hiring data, layoff news, grad season, seasonal hiring waves, BLS/JOLTS releases. Searches like `"SMB hiring 2026 [current month]"`, `"new grad hiring 2026"`, `"layoff news this week"`.
+   - **ATS / AI-in-hiring discourse:** `"applicant tracking system 2026 news"`, `"AI resume rejection 2026"`, `"ATS bias news"`, EU AI Act, NYC Local Law 144.
+   - **B2B competitor watch:** BambooHR, Workable, Greenhouse, JazzHR, Manatal — recent product announcements, feature launches, blog posts.
+   - **B2C competitor watch:** Jobright.ai, Teal, Jobscan, Kickresume, Rezi — same.
+
+2. **Identify 3–5 concrete hooks** (a number, a recent news item, a competitor move, a seasonal moment). For each hook, log the source URL.
+
+3. **Anchor a MINIMUM of 5 of the 10 captions** to at least one of those hooks. Spread them: ideally both Monday posts + at least one Tue/Wed/Thu/Fri pair. Mission Monday especially should never ship evergreen.
+
+4. **Mark each anchored post** by including the source URL in the `caption_*` field (or a `research_anchor` field in the caption object) so the user can audit which posts cite what.
+
+**Anti-shoehorn rule:** if a hook does not fit a particular post naturally, leave that post evergreen. The 5-of-10 minimum is the floor, not the ceiling. But the floor exists — do not ship a bundle where every post is timeless.
+
+**Document the research at the top of `captions.json`** as a `_research` sidecar key (the validator should accept and ignore it):
+
+```json
+{
+  "_research": {
+    "performed_at": "2026-06-05T08:35Z",
+    "hooks": [
+      {"hook": "975K new grads hired by SMBs Apr-Sept", "source": "https://fortune.com/2026/05/01/..."},
+      {"hook": "Class of 2026 hiring +5.6% YoY (NACE)", "source": "https://..."},
+      ...
+    ],
+    "anchored_posts": ["mon-b2b", "mon-b2c", "tue-b2b", "thu-b2c", "fri-b2b"]
+  },
+  "captions": [ ...10 caption objects... ]
+}
+```
 
 ### Banned topics & sensitive areas
 
@@ -242,6 +268,10 @@ Pick 2–3 hooks worth referencing across the 10 posts. Don't shoehorn — if no
 The agent must self-review the bundle against:
 
 - [ ] All 10 captions follow the voice rules (no emojis, no banned words, correct register per audience)
+- [ ] **No em-dashes (`—`), en-dashes (`–`), or double-hyphens (`--`) anywhere in headlines, sublines, or captions**
+- [ ] **Captions spell out contractions** (do not / we have / it is / you are, not don't / we've / it's / you're)
+- [ ] **At least 5 of the 10 captions have a current-data anchor** (number, recent news, competitor move, seasonal moment) with source URL logged in `_research.hooks`
+- [ ] **Both Mission Monday posts are anchored** (this slot most needs current relevance)
 - [ ] All 10 PNGs are 1080×1350, brand-correct, no overlapping text/elements, no awkward whitespace
 - [ ] Mission Monday uses RisePoint brand only; Tue–Fri use Spark brand only
 - [ ] UTM tags present on every URL with the correct `w{NN}-{weekday}-{audience}` campaign tag
@@ -249,6 +279,8 @@ The agent must self-review the bundle against:
 - [ ] Image URLs in CSVs use the `__REPLACE_<basename>__` placeholder form, not direct URLs
 - [ ] Filenames match the convention `{iso-week}-{weekday}-{audience}.png`
 - [ ] If the week falls on a holiday or major industry event, the agent has flagged this to the user
+
+**If any of the bolded items fail, do not ship the bundle. Re-do the research pass.**
 
 ---
 
