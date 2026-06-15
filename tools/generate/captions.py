@@ -178,8 +178,13 @@ extract_json_array = extract_json_payload
 def generate_captions(year: int, week_num: int, week_label: str,
                        research_hooks: str = "",
                        output_path: Path | None = None,
-                       timeout_seconds: int = 600) -> list[dict]:
+                       timeout_seconds: int = 1500) -> list[dict]:
     """Invoke Claude headlessly and return the parsed caption list.
+
+    Timeout default raised from 600s to 1500s (25 min) to accommodate the
+    mandatory research pass (4+ WebSearch calls + composition of 10 captions
+    with 3 channel variants each). The Jun 12 autonomous run hung at the
+    previous 600s ceiling.
 
     If output_path is supplied, also persists the raw JSON to disk.
     """
