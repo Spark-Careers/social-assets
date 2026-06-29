@@ -215,8 +215,33 @@ def generate_captions(year: int, week_num: int, week_label: str,
             f"stdout starts: {(proc.stdout or '')[:200]!r}"
         )
 
-    json_text = extract_json_payload(proc.stdout)
-    payload = json.loads(json_text)
+    # Always dump the raw stdout to a debug file so post-mortems work even
+    # when the JSON parse succeeds (so we can audit what claude actually said
+    # without having to re-run). Jun 19 + Jun 26 autonomous runs both crashed
+    # at json.loads with no record of what claude returned.
+    debug_dir = REPO_ROOT / "runs"
+    debug_dir.mkdir(parents=True, exist_ok=True)
+    raw_path = debug_dir / f"{week_label}-claude-stdout.txt"
+    raw_path.write_text(proc.stdout or "", encoding="utf-8")
+
+    try:
+        json_text = extract_json_payload(proc.stdout)
+    except (ValueError, RuntimeError) as exc:
+        sys.stderr.write(f"=== JSON EXTRACTION FAILED ===\n{exc}\n")
+        sys.stderr.write(f"Raw claude stdout saved to: {raw_path}\n")
+        sys.stderr.write(f"First 4KB:\n{(proc.stdout or '')[:4096]}\n")
+        sys.stderr.write("=== end ===\n")
+        raise
+
+    try:
+        payload = json.loads(json_text)
+    except json.JSONDecodeError as exc:
+        sys.stderr.write(f"=== JSON PARSE FAILED at line {exc.lineno} col {exc.colno} ===\n{exc.msg}\n")
+        sys.stderr.write(f"Raw claude stdout saved to: {raw_path}\n")
+        sys.stderr.write(f"Extracted JSON text (first 4KB):\n{json_text[:4096]}\n")
+        sys.stderr.write(f"Bytes around error position (char {exc.pos}):\n{json_text[max(0,exc.pos-100):exc.pos+100]!r}\n")
+        sys.stderr.write("=== end ===\n")
+        raise
 
     # Accept both new {_research, captions} object form and legacy bare array.
     if isinstance(payload, dict) and "captions" in payload:
