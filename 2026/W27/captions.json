@@ -1,0 +1,195 @@
+{
+  "_research": {
+    "performed_at": "2026-06-19T12:00:00Z",
+    "notes": "Canada Day (July 1) falls on Wednesday this week. The wed-b2b and wed-b2c posts are scheduled for 2026-07-01. Consider rescheduling or adjusting for Canadian audiences.",
+    "hooks": [
+      {
+        "hook": "974,000 graduates aged 20-24 will be hired at small businesses between April and September 2026, up from 962,000 last year (Gusto 2026 New Grad Hiring Report)",
+        "source": "https://www.techtimes.com/articles/317535/20260601/entry-level-tech-jobs-2026-148092-cuts-expose-which-skills-still-get-you-hired.htm"
+      },
+      {
+        "hook": "BLS JOLTS April 2026: 7.6 million job openings vs 7.4 million unemployed workers, 1.03 jobs per unemployed worker, highest since January 2024",
+        "source": "https://www.bls.gov/news.release/jolts.nr0.htm"
+      },
+      {
+        "hook": "AI screening systems reject approximately 75 percent of resumes within 5 seconds of submission; about 50.5 percent of US job seekers were rejected without a word in 2025",
+        "source": "https://enhancv.com/blog/ai-hiring-statistics/"
+      },
+      {
+        "hook": "By mid-2026, an estimated 83 percent of employers use AI filters specifically designed to flag resumes that appear AI-generated or fail to match the job description",
+        "source": "https://salaryfor.com/blog/why-ai-is-rejecting-your-job-applications-in-2026/"
+      },
+      {
+        "hook": "ZipRecruiter 2026 Annual Grad Report: grads with work experience hired at 81.6 percent vs 40.7 percent for those without, more than doubling the odds",
+        "source": "https://www.4cornerresources.com/job-market-news/college-grad-job-market-2026/"
+      },
+      {
+        "hook": "Most small businesses in a low-hire, low-fire holding pattern entering Q3 2026, but Q3 is historically when SMB headcount decisions accelerate",
+        "source": "https://www.commpayhr.com/not-hiring-not-firing-small-business-hiring-trends-in-the-2026-labor-market/"
+      }
+    ],
+    "anchored_posts": ["mon-b2b", "mon-b2c", "tue-b2b", "tue-b2c", "wed-b2c"]
+  },
+  "captions": [
+    {
+      "day": "mon",
+      "audience": "b2b",
+      "theme_tag": "MISSION MONDAY",
+      "overline": "",
+      "badge_number": null,
+      "headline": "We built this because small businesses deserved a real hiring system.",
+      "highlights": ["hiring", "system"],
+      "subline": "The origin story behind RisePoint Careers.",
+      "url": "hire.risepointcareers.com",
+      "footer_meta": "For employers \u00b7 Spark Careers Enterprise",
+      "caption_linkedin": "Around 974,000 graduates aged 20 to 24 will be hired at small businesses between April and September this year, up from 962,000 last year according to Gusto's 2026 New Grad Hiring Report.\n\nAnd yet most of those hires still happen through email threads, WhatsApp groups, shared Google Sheets, and LinkedIn DMs that never get a proper follow-up.\n\nWe have seen this firsthand. A founder posts a role, gets 60 applications in three days, loses track of who said what in which email chain, and eventually makes a hire based on whoever happened to stay in touch at the right moment. Three months later they are not sure the hire was the right one. Six months later they are starting over.\n\nThat is the problem RisePoint Careers was built to solve.\n\nNot for enterprise. Not for HR departments with dedicated recruiters and procurement budgets. For the founder who is managing client work and operations and hiring between meetings. For the practice manager at a 12-person clinic trying to fill a front-desk role without dropping the rest of the job. For the agency owner hiring their third account manager while simultaneously billing their biggest client.\n\nQ3 hiring season is here. If you are a small business planning to add headcount between now and September, the pipeline starts today. Not with a better job posting. With a system that lets you run a fair, organized process without adding hours to your week.\n\nThat is what we built. And that is why we built it.\n\nhttps://hire.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-mon-b2b",
+      "caption_facebook": "Around 974,000 graduates aged 20 to 24 will be hired at small businesses between April and September this year, up from 962,000 last year according to Gusto's 2026 New Grad Hiring Report.\n\nAnd most of those hires still happen through email threads, WhatsApp groups, and Google Sheets that no one can find a week later.\n\nWe built RisePoint Careers because founders deserve a real hiring system. Not an enterprise platform built for HR departments. Something lightweight, organized, and built for teams of one to twenty who are hiring between client calls and everything else.\n\nQ3 hiring season is here. If you are adding headcount before September, now is the right time to set up a proper process.\n\nhttps://hire.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-mon-b2b",
+      "caption_instagram": "",
+      "channels": ["linkedin", "facebook"]
+    },
+    {
+      "day": "mon",
+      "audience": "b2c",
+      "theme_tag": "MISSION MONDAY",
+      "overline": "",
+      "badge_number": null,
+      "headline": "We built Spark because being qualified should be enough to get a real look.",
+      "highlights": ["real", "look"],
+      "subline": "The jobs are out there. The barrier is the filter.",
+      "url": "spark.risepointcareers.com",
+      "footer_meta": "For job seekers \u00b7 Spark Careers",
+      "caption_linkedin": "In April 2026, there were 7.6 million job openings in the United States. At the same time, 7.4 million people were actively looking for work. The numbers are almost equal.\n\nSo why does it feel like the market is impossible?\n\nBecause most resumes never reach a human. AI screening systems now reject approximately 75 percent of applications within seconds of submission. Before a recruiter sees your name. Before anyone reads a word you wrote.\n\nThat is the problem Spark Careers was built to solve.\n\nThe jobs are there. The gap is between your application and the person who has the power to invite you to an interview. Spark gives you the tools to close that gap: ATS-optimized resumes, keyword alignment, formatting that gets parsed correctly, and a clear picture of where you stand before you apply.\n\nYou are not unqualified. You are being filtered out. Those are two very different things.\n\nhttps://spark.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-mon-b2c",
+      "caption_facebook": "In April 2026, the BLS reported 7.6 million job openings in the United States. At the same time, 7.4 million people were actively looking.\n\nAlmost even numbers. So why does getting hired feel nearly impossible?\n\nAI screening tools reject roughly 75 percent of resumes before a human ever reads them. Your application lands, an algorithm scores it, and you are out before anyone even knows you applied.\n\nSpark Careers was built because that should not be how it works. You deserve a resume that gets through the filter and into the right hands.\n\nhttps://spark.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-mon-b2c",
+      "caption_instagram": "7.6 million job openings in April 2026. 7.4 million people looking. The math should work in your favor. It does not, because 75 percent of resumes never reach a human reviewer.\n\nAI screening systems filter out most applicants within seconds. Not because you are unqualified. Because your resume was not formatted to survive the scan.\n\nSpark was built to fix that. We give you an ATS-optimized resume, keyword alignment, and formatting that gets parsed correctly so your application actually reaches the person doing the hiring.\n\nThe jobs are there. Do not let the filter be the reason you miss them.\n\nLink in bio: spark.risepointcareers.com",
+      "channels": ["linkedin", "facebook", "instagram"]
+    },
+    {
+      "day": "tue",
+      "audience": "b2b",
+      "theme_tag": "TRADE SECRETS",
+      "overline": "THE INSIGHT",
+      "badge_number": 27,
+      "headline": "Build your talent pool now, before the pressure makes you settle.",
+      "highlights": ["settle"],
+      "subline": "The SMB hiring mistake that costs the most.",
+      "url": "hire.risepointcareers.com",
+      "footer_meta": "For employers \u00b7 Spark Careers Enterprise",
+      "caption_linkedin": "Many small businesses enter Q3 in reactive hiring mode. A key person leaves, a contract expands, or growth arrives faster than expected, and suddenly you are scrambling to fill a role while still running the business.\n\nThat is when most SMB hires go wrong.\n\nRight now, most small businesses are in what analysts describe as a low-hire, low-fire holding pattern. They are not expanding headcount aggressively, but they are also not cutting. The businesses that move fastest when Q3 volume picks up are the ones who are not starting from zero when a seat opens.\n\nTrade Secret No. 27: build a light talent pool before you have an opening.\n\nHere is what that looks like in practice. When you meet someone strong at a networking event, or review an application that is solid but poorly timed, log them. A name, a role type, a brief note on why they stood out, and a rough date when you might be ready to talk. That is it. No complex system required.\n\nWhen a seat opens and you are under pressure, you will have three people to call instead of thirty applications to sort. That difference can mean weeks off your time-to-hire.\n\nSpark Careers Enterprise makes this automatic. Every candidate you engage with stays organized and searchable, even the ones you are not ready for yet. Your pipeline is there when you need it, without the spreadsheet archaeology.\n\nQ3 hiring season runs April through September. You are in it now.\n\nhttps://hire.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-tue-b2b",
+      "caption_facebook": "Most small businesses are in a low-hire, low-fire holding pattern right now. But Q3 is when that changes fast.\n\nTrade Secret No. 27: build your talent pool before you have an opening. When you meet someone strong, log them. When a good application comes in at the wrong time, save it. When a seat opens under pressure, you will have people to call instead of starting from scratch.\n\nThe businesses that hire well are the ones that are not surprised when they need to hire.\n\nhttps://hire.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-tue-b2b",
+      "caption_instagram": "",
+      "channels": ["linkedin", "facebook"]
+    },
+    {
+      "day": "tue",
+      "audience": "b2c",
+      "theme_tag": "TRADE SECRETS",
+      "overline": "THE INSIGHT",
+      "badge_number": 27,
+      "headline": "Your resume is being scored before a human reads the first word.",
+      "highlights": ["first", "word"],
+      "subline": "Format. Keywords. Structure. Three things that decide your score.",
+      "url": "spark.risepointcareers.com",
+      "footer_meta": "For job seekers \u00b7 Spark Careers",
+      "caption_linkedin": "",
+      "caption_facebook": "Trade Secret No. 27: AI screening tools reject approximately 75 percent of resumes within seconds of submission. Most of the time, the issue is not your qualifications. It is formatting, keyword alignment, or column structure.\n\nBy mid-2026, an estimated 83 percent of employers use filters specifically designed to flag resumes that appear AI-generated or fail to match the job description closely enough.\n\nThree things to check before you apply. One: is your resume a single column? Two-column layouts regularly break when parsed by ATS software. Two: does your resume include keywords from the actual job posting, not just general industry terms? Three: did you tailor the content to this specific role, or is it the same document you sent everywhere?\n\nSpark Careers walks you through all three. Take the free scan and see where your resume stands.\n\nhttps://spark.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-tue-b2c",
+      "caption_instagram": "AI tools reject about 75 percent of resumes in seconds. Here is what they flag, and how to get through.\n\nMost rejections are not about your qualifications. They are about formatting, keyword gaps, or a two-column layout that the ATS cannot parse.\n\nBefore your next application, check three things. First: is your resume single-column? Two-column designs regularly fail ATS parsing. Second: does your resume mirror the language in the job posting? Not stuffed with keywords, just aligned to how the employer describes the role. Third: is the document tailored to this specific job, or is it a general template?\n\nBy mid-2026, most employers use filters that flag both poor formatting and generic content. Personalization and structure matter more now than they did a year ago.\n\nSpark Careers walks you through all of it for free.\n\nLink in bio: spark.risepointcareers.com",
+      "channels": ["facebook", "instagram"]
+    },
+    {
+      "day": "wed",
+      "audience": "b2b",
+      "theme_tag": "SPOTLIGHT",
+      "overline": "",
+      "badge_number": null,
+      "headline": "Hiring through email and DMs is not a system. It is a liability.",
+      "highlights": ["liability"],
+      "subline": "Built for founders who are doing the hiring themselves.",
+      "url": "hire.risepointcareers.com",
+      "footer_meta": "For employers \u00b7 Spark Careers Enterprise",
+      "caption_linkedin": "There is a particular kind of hiring that happens at small businesses. It goes something like this.\n\nYou post a role. Applications come in. You read some of them when you have a moment, which is rare. A few candidates email to follow up and you mean to reply but forget. Someone reaches out on LinkedIn and you save their profile to look at later. Two weeks go by and you realize you have 47 applications, three conversations going in three different places, and no clear picture of where any of them stand.\n\nThen you make a hire based on who was easiest to get in front of you at the right moment. And six months later, you are not sure it was the right call.\n\nThis is not a failure of judgment. It is a failure of tooling.\n\nEnterprise ATS platforms were not built for this problem. They were built for HR departments running coordinated hiring across dozens of open roles with dedicated recruiters and structured workflows. BambooHR, Workable, Greenhouse: all excellent for what they were designed for. None of them were designed for the founder who is their own recruiter.\n\nSpark Careers Enterprise was. It keeps all your candidates in one place, lets you move them through a simple pipeline, and sends updates automatically so no one falls through the cracks. You can run a fair, organized process in the time it used to take you to find that one email.\n\nIf your current hiring system is your inbox, this was built for you.\n\nhttps://hire.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-wed-b2b",
+      "caption_facebook": "Most small business hiring happens through email chains, LinkedIn DMs, shared spreadsheets, and WhatsApp threads that no one can find a week later.\n\nThat is not a system. It is a liability. Every missed follow-up, every candidate who slips through, every hire made under pressure because the process fell apart costs time and money you do not have.\n\nSpark Careers Enterprise was built for the founder doing the hiring between everything else. One clean pipeline, organized candidates, and automated updates so nothing falls through.\n\nNot enterprise software. A real solution for teams of one to twenty.\n\nhttps://hire.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-wed-b2b",
+      "caption_instagram": "",
+      "channels": ["linkedin", "facebook"]
+    },
+    {
+      "day": "wed",
+      "audience": "b2c",
+      "theme_tag": "SPOTLIGHT",
+      "overline": "",
+      "badge_number": null,
+      "headline": "Your application is competing with hundreds of others. Here is how to stand out.",
+      "highlights": ["stand", "out"],
+      "subline": "The preparation is what changes the outcome.",
+      "url": "spark.risepointcareers.com",
+      "footer_meta": "For job seekers \u00b7 Spark Careers",
+      "caption_linkedin": "Gusto's 2026 New Grad Hiring Report found that approximately 974,000 graduates aged 20 to 24 will be hired at small businesses between April and September this year. That is a real number, and it represents a real opportunity.\n\nBut the same data shows that graduates who enter the market without relevant work experience are hired at less than half the rate of their peers who do. 40.7 percent without experience. 81.6 percent with it. Work experience more than doubled the odds.\n\nThe market is competitive, but it is not closed. What separates the candidates who get interviews from the ones who do not is rarely about being the most qualified person in the pool. It is usually about how clearly the application communicates value, how well the resume is aligned to the role, and whether the document survives the ATS screen.\n\nSpark Careers was built to help you on all three fronts. Your resume, your alignment, your strategy.\n\nThe season is open. The work is in the preparation.\n\nhttps://spark.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-wed-b2c",
+      "caption_facebook": "According to Gusto's 2026 New Grad Hiring Report, nearly 974,000 graduates will be hired at small businesses this season, up from 962,000 last year.\n\nBut the gap between grads who land jobs and those who do not is wide. The ones with work experience, even part-time or freelance, get hired at twice the rate. 81.6 percent with experience versus 40.7 percent without.\n\nThe market is competitive but it is not closed. What moves the needle is how clearly your application communicates what you can do, and whether your resume makes it through the ATS screen.\n\nSpark helps you get both right.\n\nhttps://spark.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-wed-b2c",
+      "caption_instagram": "974,000 graduates will be hired at small businesses this season. The market is open. The question is whether your resume gets through.\n\nGusto's 2026 New Grad Hiring Report shows that grads with any work experience, even part-time or freelance, get hired at twice the rate of those without. 81.6 percent versus 40.7 percent.\n\nIf you are in the 2026 job market, the advantage goes to the candidate whose application is clearest and whose resume is formatted to pass the ATS screen.\n\nSpark Careers gives you both. A resume that gets through, and a strategy that makes sense for where you are right now.\n\nDo not let the filter be the last word on your application.\n\nLink in bio: spark.risepointcareers.com",
+      "channels": ["linkedin", "facebook", "instagram"]
+    },
+    {
+      "day": "thu",
+      "audience": "b2b",
+      "theme_tag": "COMMITMENT THURSDAY",
+      "overline": "",
+      "badge_number": null,
+      "headline": "You did not get into business to spend your weekends sorting resumes.",
+      "highlights": ["sorting", "resumes"],
+      "subline": "Running a business is already a full-time job.",
+      "url": "hire.risepointcareers.com",
+      "footer_meta": "For employers \u00b7 Spark Careers Enterprise",
+      "caption_linkedin": "Nobody starts a business and thinks: I cannot wait to spend my Thursday morning cross-referencing a spreadsheet with email threads and LinkedIn messages to figure out which candidate I already spoke to.\n\nAnd yet that is where a lot of small business owners end up when hiring season hits. Not because they made a bad decision. Because hiring, done manually, is surprisingly expensive in time and mental load, and nobody told them there was a better way.\n\nThere is.\n\nIf you are a founder running a team of fewer than twenty people, you should not need a full HR stack, a dedicated recruiter, or an enterprise ATS to run a decent process. You need something that takes twenty minutes to set up, keeps your candidates organized, and gets out of the way while you run your business.\n\nThat is what we built. Not a replacement for your judgment. A replacement for the spreadsheet.\n\nIf you have been putting off your next hire because the process feels like a second job, you are exactly who Spark Careers Enterprise was designed for.\n\nhttps://hire.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-thu-b2b",
+      "caption_facebook": "Nobody starts a business to spend their weekends sorting through email threads trying to remember which candidate they already spoke to.\n\nBut that is what manual hiring looks like when the applications pile up.\n\nSpark Careers Enterprise was built for founders and small team operators who need a clean, simple hiring process without the enterprise price tag or the learning curve. Keep your candidates organized, move the right ones forward, and get back to the work you actually started the business to do.\n\nhttps://hire.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-thu-b2b",
+      "caption_instagram": "",
+      "channels": ["linkedin", "facebook"]
+    },
+    {
+      "day": "thu",
+      "audience": "b2c",
+      "theme_tag": "COMMITMENT THURSDAY",
+      "overline": "",
+      "badge_number": null,
+      "headline": "The job search is a process, not a verdict.",
+      "highlights": ["verdict"],
+      "subline": "You are doing the hard part by staying in it.",
+      "url": "spark.risepointcareers.com",
+      "footer_meta": "For job seekers \u00b7 Spark Careers",
+      "caption_linkedin": "Right now, somewhere between 7 and 8 million people in the United States are looking for work. If you are one of them, you already know the experience is rarely straightforward.\n\nApplications go unanswered. Interviews happen and then go quiet. Roles you were qualified for get filled by someone who knew someone, or by a candidate whose resume happened to parse better in the ATS.\n\nNone of that is a reflection of your value.\n\nThe job search asks for a sustained effort under conditions of real uncertainty. That is genuinely hard. The people who get through it are not always the most qualified candidates in the pool. They are often the ones who stayed organized, kept improving their materials, and gave themselves a fair shot at being seen.\n\nSpark Careers is here to help you get there. Not with false encouragement, but with actual tools that improve your odds: a resume that passes ATS screening, keyword alignment, and clear feedback on where you stand.\n\nYou have done the hard part by staying in it. Let us help with the rest.\n\nhttps://spark.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-thu-b2c",
+      "caption_facebook": "Somewhere between 7 and 8 million people in the US are job searching right now. If you are one of them, the silence from employers is not a verdict on your potential.\n\nThe search is hard. Staying organized, keeping your materials sharp, and showing up consistently is the work. The outcome is not always fast.\n\nSpark Careers gives you the tools to improve your chances on every application. A better resume, better alignment, better odds.\n\nYou are doing the hard part. Let the tools do the rest.\n\nhttps://spark.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-thu-b2c",
+      "caption_instagram": "Somewhere between 7 and 8 million people are job searching right now. If you are one of them, the silence is not a verdict.\n\nThe search takes longer than anyone prepares you for. Applications go without response. Interviews go quiet. Roles close without explanation. None of that means you are not good enough.\n\nWhat it means is that your odds improve when your materials are sharp, your resume passes the ATS screen, and your application clearly reflects what you bring to the role.\n\nSpark Careers helps with all of it. You do not have to figure it out alone.\n\nLink in bio: spark.risepointcareers.com",
+      "channels": ["linkedin", "facebook", "instagram"]
+    },
+    {
+      "day": "fri",
+      "audience": "b2b",
+      "theme_tag": "FEATURE FRIDAY",
+      "overline": "THIS WEEK'S FEATURE",
+      "badge_number": null,
+      "headline": "One pipeline for every candidate, from first application to final offer.",
+      "highlights": ["final", "offer"],
+      "subline": "Try Spark Careers Enterprise free for 7 days.",
+      "url": "hire.risepointcareers.com",
+      "footer_meta": "For employers \u00b7 Spark Careers Enterprise",
+      "caption_linkedin": "The average small business hiring process involves at least three places where candidates can fall through: the email inbox, the spreadsheet that was never fully updated, and the messaging thread where that one promising conversation happened last week.\n\nMultiply that by five candidates and two open roles, and you have a coordination problem that quietly costs you good hires.\n\nThe result is usually the same: someone strong gets missed, a decision takes longer than it should, and the hire you eventually make may not be the best person available.\n\nSpark Careers Enterprise solves this with a single, clean candidate pipeline. Every applicant who applies or gets added manually appears in one view. You can see where they are in the process, add notes, move them forward, or archive them with one click. Nothing lives in your email. Nothing gets lost in a thread.\n\nFor teams of fewer than twenty people, this is not a luxury. It is the difference between a hiring process that supports your business and one that slows it down.\n\nFeature Friday: candidate pipeline management. Every applicant, one view, zero spreadsheets.\n\nTry it free for 7 days. No credit card required.\n\nhttps://hire.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-fri-b2b",
+      "caption_facebook": "If your candidate tracking system is a mix of email, a shared spreadsheet, and memory, you are one busy week away from losing a great hire.\n\nSpark Careers Enterprise gives you a single pipeline for every applicant. See where everyone is, add notes, move the right people forward, and archive the rest. Clean, fast, and built for teams of twenty or fewer.\n\nTry it free for 7 days.\n\nhttps://hire.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-fri-b2b",
+      "caption_instagram": "",
+      "channels": ["linkedin", "facebook"]
+    },
+    {
+      "day": "fri",
+      "audience": "b2c",
+      "theme_tag": "FEATURE FRIDAY",
+      "overline": "THIS WEEK'S FEATURE",
+      "badge_number": null,
+      "headline": "See exactly how your resume scores before you send it anywhere.",
+      "highlights": ["scores"],
+      "subline": "Free resume scan. Real feedback. No guessing.",
+      "url": "spark.risepointcareers.com",
+      "footer_meta": "For job seekers \u00b7 Spark Careers",
+      "caption_linkedin": "Most people do not know how their resume actually appears to an ATS. They upload a document they have spent hours on, send it out, and get no response and no explanation.\n\nSpark Careers changes that.\n\nUpload your resume, and you get an immediate score. Not vague encouragement. Specific feedback: which keywords are missing, which sections are not being parsed correctly, and what formatting choices are reducing your chances before a recruiter ever sees your name.\n\nThen you fix it. Right there in the tool.\n\nBy the time your application goes out, you know your resume works. You know it is formatted in a way that ATS software can actually read. You know the language aligns with what the role requires.\n\nThat is what Spark does. Not just a builder. A scanner, an optimizer, and a feedback loop that tells you exactly where you stand.\n\nTry it for free.\n\nhttps://spark.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-fri-b2c",
+      "caption_facebook": "Most job seekers have no idea how their resume looks to an ATS. They apply. They hear nothing back. They do not know if the problem is the resume, the fit, or the timing.\n\nSpark Careers shows you.\n\nUpload your resume, get a real ATS score, see the gaps, and fix them before you apply. You go in knowing your resume is formatted correctly and aligned to the role.\n\nTry the free scan today.\n\nhttps://spark.risepointcareers.com/?utm_source=social&utm_medium=post&utm_campaign=w27-fri-b2c",
+      "caption_instagram": "Upload your resume. Get a real ATS score. Fix the gaps before your next application.\n\nMost rejections are not about your qualifications. They are about formatting, keyword gaps, and document structure that ATS software cannot read correctly. Spark Careers shows you exactly where you stand and what to fix.\n\nFree to try. No guessing about whether your resume is working.\n\nLink in bio: spark.risepointcareers.com",
+      "channels": ["linkedin", "facebook", "instagram"]
+    }
+  ]
+}
