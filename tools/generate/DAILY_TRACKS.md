@@ -128,11 +128,20 @@ B2C content from week 12 onward. Options are to extend the B2C curriculum, hold
 B2C at a lower cadence, or accept the repeat with refreshed copy. Needs a
 decision before week 12.
 
-**Scheduled task not repointed.** `SparkCareers\WeeklyContentBuild` still runs
-the old `run_weekly.ps1`. It has deliberately not been switched, so no
-unattended run can fire against the new pipeline before the template direction
-is confirmed. To switch, change the script path inside `run_weekly.ps1` from
-`run_weekly.py` to `run_daily_weekly.py`.
+**Nothing runs unattended.** The scheduled task `SparkCareers\WeeklyContentBuild`
+was disabled on 2026-08-02. Weeks are built by hand:
+
+```bash
+python tools/generate/run_daily_weekly.py --dry-run     # check first
+python tools/generate/run_daily_weekly.py               # build the next week
+```
+
+Then push the posters and run `tools/finalize_buffer_csvs.py`. The task still
+points at the old `run_weekly.ps1` and is not wired to this pipeline at all.
+To re-enable automation later, repoint that wrapper at `run_daily_weekly.py`
+first, then `Enable-ScheduledTask -TaskName WeeklyContentBuild -TaskPath
+"\SparkCareers\"`. Enabling it as-is would generate old-format content and
+collide with the daily tracks.
 
 **Instagram for B2B.** B2B is currently set to LinkedIn and Facebook only,
 carried over from the previous model on the reasoning that operator content

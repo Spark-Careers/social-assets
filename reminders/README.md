@@ -2,18 +2,34 @@
 
 ## Purpose
 
-The real trigger is now the Windows scheduled task `SparkCareers\WeeklyContentBuild`
-(see `tools/generate/install-task.ps1`). It fires every **Friday 08:30
-America/Edmonton**, builds the next week's bundle, and pops a Windows toast
-when done.
+**The scheduled task is disabled as of 2026-08-02.** Weeks are now built by
+hand, so this calendar event is the only prompt you get. There is no toast
+notification any more.
 
-This calendar event is a **backstop** — a recurring nudge **at 09:30 every
-Friday** to remind you to check `Downloads\spark-w{NN}-buffer\` and bulk-upload
-the 3 CSVs to Buffer. If for some reason the toast was missed (laptop muted,
-notification cleared too fast, etc.), the calendar reminder catches it.
+The event fires **09:30 every Friday** as a nudge to build the coming week and
+upload it to Buffer.
 
-Toast notification *only* = also fine. Calendar reminder *only* and toast
-missing = something's wrong, check `social-assets\runs\wrapper-*.log`.
+## What to do when it fires
+
+```bash
+cd "C:\Users\HP\Desktop\Personal Docs\Post Shell Projects\IdleSpark\Marketing\social-assets"
+
+python tools/generate/run_daily_weekly.py --dry-run     # confirm the week and modules
+python tools/generate/run_daily_weekly.py               # render 12 posters, write source CSVs
+
+git add 2026/ content/curriculum_state.json
+git commit -m "2026-WNN: daily tracks"
+git push                                                 # posters must be live before finalizing
+
+python tools/finalize_buffer_csvs.py --week 2026-WNN \
+    --input  "C:\Users\HP\Downloads\spark-2026-wNN-buffer\_source" \
+    --output "C:\Users\HP\Downloads\spark-2026-wNN-buffer"
+```
+
+Then open Buffer and bulk-upload the three `*-final.csv` files, one per channel:
+Publish tab, channel, gear icon, General, Bulk Upload.
+
+Full detail lives in `tools/generate/DAILY_TRACKS.md`.
 
 ## Install
 
@@ -28,7 +44,12 @@ missing = something's wrong, check `social-assets\runs\wrapper-*.log`.
 ### Apple Calendar
 1. Double-click the `.ics` file (Mac) or email it to yourself and tap (iOS).
 
-## First occurrence
+## History
 
-**Fri May 29, 2026 at 09:30 MT** — covering the build of Week 23 (Jun 1–5)
-which happens at 08:30 the same morning.
+Until 2026-08-02 the real trigger was the Windows scheduled task
+`SparkCareers\WeeklyContentBuild`, firing every Friday 08:30 America/Edmonton
+and popping a toast when the bundle was ready. That task ran the old
+theme-and-research pipeline. It has been disabled rather than removed, so the
+definition is still there if automation is wanted again later. Re-enabling it
+without first repointing `run_weekly.ps1` at `run_daily_weekly.py` would
+generate old-format content and collide with the daily tracks.
