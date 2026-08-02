@@ -1,0 +1,10 @@
+{
+  "b2b": {
+    "next_series_week": 2,
+    "cycle": 1
+  },
+  "b2c": {
+    "next_series_week": 2,
+    "cycle": 1
+  }
+}

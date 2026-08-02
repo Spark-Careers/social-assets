@@ -1,0 +1,149 @@
+{
+  "iso_week": "2026-W33",
+  "tracks": {
+    "b2b": {
+      "series_week": 1,
+      "cycle": 1,
+      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large"
+    },
+    "b2c": {
+      "series_week": 1,
+      "cycle": 1,
+      "module": "Why the Employment Market Feels Harder Than It Should"
+    }
+  },
+  "posts": [
+    {
+      "track": "b2b",
+      "day": "Mon",
+      "time": "08:00",
+      "role": "The Frame",
+      "headline": "Your company can be small and your hiring can still be complex.",
+      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
+      "cta": "Audit your hiring workflow",
+      "media": "2026-W33-b2b-mon.png",
+      "channels": "linkedin, facebook"
+    },
+    {
+      "track": "b2b",
+      "day": "Tue",
+      "time": "08:00",
+      "role": "The Mechanism",
+      "headline": "Hiring breaks when the process lives in five different places.",
+      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
+      "cta": "Map your hiring workflow",
+      "media": "2026-W33-b2b-tue.png",
+      "channels": "linkedin, facebook"
+    },
+    {
+      "track": "b2b",
+      "day": "Wed",
+      "time": "08:00",
+      "role": "The Technique",
+      "headline": "Before you add software, draw the process.",
+      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
+      "cta": "Map your hiring workflow",
+      "media": "2026-W33-b2b-wed.png",
+      "channels": "linkedin, facebook"
+    },
+    {
+      "track": "b2b",
+      "day": "Thu",
+      "time": "08:00",
+      "role": "The Nuance",
+      "headline": "Structure is not bureaucracy. Unclear ownership is.",
+      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
+      "cta": "Review your hiring process",
+      "media": "2026-W33-b2b-thu.png",
+      "channels": "linkedin, facebook"
+    },
+    {
+      "track": "b2b",
+      "day": "Fri",
+      "time": "08:00",
+      "role": "The Limit",
+      "headline": "A new system cannot rescue an undefined process.",
+      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
+      "cta": "Assess your system readiness",
+      "media": "2026-W33-b2b-fri.png",
+      "channels": "linkedin, facebook"
+    },
+    {
+      "track": "b2b",
+      "day": "Sat",
+      "time": "08:00",
+      "role": "The Action",
+      "headline": "Take one recent hire. Find where the process broke.",
+      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
+      "cta": "Audit your hiring workflow",
+      "media": "2026-W33-b2b-sat.png",
+      "channels": "linkedin, facebook"
+    },
+    {
+      "track": "b2c",
+      "day": "Mon",
+      "time": "12:00",
+      "role": "The Frame",
+      "headline": "The market is not only hard. It is badly translated.",
+      "module": "Why the Employment Market Feels Harder Than It Should",
+      "cta": "Identify your skills",
+      "media": "2026-W33-b2c-mon.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2c",
+      "day": "Tue",
+      "time": "12:00",
+      "role": "The Mechanism",
+      "headline": "Your experience gets compressed before it gets judged.",
+      "module": "Why the Employment Market Feels Harder Than It Should",
+      "cta": "Review your resume",
+      "media": "2026-W33-b2c-tue.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2c",
+      "day": "Wed",
+      "time": "12:00",
+      "role": "The Technique",
+      "headline": "The job description is incomplete too.",
+      "module": "Why the Employment Market Feels Harder Than It Should",
+      "cta": "Analyze a job",
+      "media": "2026-W33-b2c-wed.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2c",
+      "day": "Thu",
+      "time": "12:00",
+      "role": "The Nuance",
+      "headline": "Rejection is often uncertainty, not a verdict.",
+      "module": "Why the Employment Market Feels Harder Than It Should",
+      "cta": "Track applications",
+      "media": "2026-W33-b2c-thu.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2c",
+      "day": "Fri",
+      "time": "12:00",
+      "role": "The Limit",
+      "headline": "No tool can remove uncertainty. Good tools make it visible.",
+      "module": "Why the Employment Market Feels Harder Than It Should",
+      "cta": "Explore role matches",
+      "media": "2026-W33-b2c-fri.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2c",
+      "day": "Sat",
+      "time": "12:00",
+      "role": "The Action",
+      "headline": "Find where your story is getting lost.",
+      "module": "Why the Employment Market Feels Harder Than It Should",
+      "cta": "Review your resume",
+      "media": "2026-W33-b2c-sat.png",
+      "channels": "linkedin, facebook, instagram"
+    }
+  ]
+}
