@@ -42,6 +42,9 @@ STATE_FILE = CONTENT / "curriculum_state.json"
 
 DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
+# Buffer allows at most this many posts per channel per week.
+MAX_POSTS_PER_CHANNEL = 10
+
 TRACKS = {
     "b2b": {
         "curriculum": "b2b_curriculum.json",
@@ -52,8 +55,15 @@ TRACKS = {
         "channels": ["linkedin", "facebook"],
         # Ink ground. Reads as the declarative, operator-facing track.
         "direction": "1b",
-        # The Frame opens each module, so Monday gets the loud poster.
+        # The loud poster opens each track's week. Applied to the first day the
+        # track actually publishes, which is not always Monday once slots are
+        # skipped.
         "opener_direction": "1c",
+        # Skipped to hold each channel at MAX_POSTS_PER_CHANNEL. The lesson in a
+        # skipped slot is dropped for good, it does not carry into a later week,
+        # so every module publishes five of its six posts and B2B never runs
+        # The Frame.
+        "skip_days": ["Mon"],
     },
     "b2c": {
         "curriculum": "b2c_curriculum.json",
@@ -65,6 +75,8 @@ TRACKS = {
         # Cream editorial. The lighter, feed-friendly default.
         "direction": "1a",
         "opener_direction": "1c",
+        # B2C keeps Monday (The Frame) and drops Tuesday (The Mechanism).
+        "skip_days": ["Tue"],
     },
 }
 
@@ -125,6 +137,24 @@ def take_series_week(cur: dict, series_week: int) -> list[dict]:
     return sorted(posts, key=lambda p: DAY_ORDER.index(p["day"]))
 
 
+def split_published(track: str, posts: list[dict]) -> tuple[list[dict], list[dict]]:
+    """Partition a series week into what publishes and what is dropped."""
+    skip = set(TRACKS[track].get("skip_days", []))
+    published = [p for p in posts if p["day"] not in skip]
+    dropped = [p for p in posts if p["day"] in skip]
+    return published, dropped
+
+
+def check_channel_caps(rows_by_channel: dict[str, list[dict]]) -> None:
+    """Refuse to emit a week that would exceed the per-channel cap."""
+    over = {ch: len(rows) for ch, rows in rows_by_channel.items()
+            if len(rows) > MAX_POSTS_PER_CHANNEL}
+    if over:
+        detail = ", ".join(f"{ch} {n}" for ch, n in sorted(over.items()))
+        sys.exit(f"channel cap exceeded (max {MAX_POSTS_PER_CHANNEL} per channel): {detail}. "
+                 f"Adjust skip_days in TRACKS.")
+
+
 # ------------------------------------------------------------------- captions
 def tracked_url(base: str, track: str, series_week: int, day: str) -> str:
     campaign = f"{track}-s{series_week:02d}-{day.lower()}"
@@ -151,8 +181,12 @@ def render_week(track: str, posts: list[dict], series_week: int,
     by_direction: dict[str, list[tuple[dict, Path]]] = {}
     written: list[Path] = []
 
+    # The loud poster opens the track's week, which is its first published day
+    # rather than Monday once slots are skipped.
+    opener_day = posts[0]["day"] if posts else None
+
     for post in posts:
-        direction = cfg["opener_direction"] if post["day"] == "Mon" else cfg["direction"]
+        direction = cfg["opener_direction"] if post["day"] == opener_day else cfg["direction"]
         payload = payload_from_curriculum(post, series_len=6,
                                           brand=cfg["brand"], url=cfg["url"])
         # Poster numeral keys off the series week, which stays unique across a
@@ -238,22 +272,37 @@ def main() -> int:
             series_week = 1
             st["cycle"] += 1
 
-        posts = take_series_week(cur, series_week)
+        all_posts = take_series_week(cur, series_week)
+        posts, dropped = split_published(track, all_posts)
         plan[track] = {"cur": cur, "series_week": series_week, "posts": posts,
-                       "total_weeks": total_weeks, "cycle": st["cycle"]}
+                       "dropped": dropped, "total_weeks": total_weeks,
+                       "cycle": st["cycle"]}
 
-        module = posts[0]
+        module = all_posts[0]
         print(f"  [{track}] series week {series_week}/{total_weeks} "
               f"(cycle {st['cycle']})  ·  {module['module_title']}")
         print(f"          pillar: {module['pillar']}   time: {TRACKS[track]['time']}   "
               f"channels: {', '.join(TRACKS[track]['channels'])}")
         for p in posts:
             print(f"            {p['day']}  {p['role']:<14} {p['visual_headline'][:62]}")
+        for p in dropped:
+            print(f"            {p['day']}  {p['role']:<14} "
+                  f"[skipped, not published] {p['visual_headline'][:40]}")
+
+    total_posts = sum(len(plan[t]["posts"]) for t in tracks)
+    total_dropped = sum(len(plan[t]["dropped"]) for t in tracks)
+    per_channel: dict[str, int] = {}
+    for t in tracks:
+        for ch in TRACKS[t]["channels"]:
+            per_channel[ch] = per_channel.get(ch, 0) + len(plan[t]["posts"])
+    cap_line = ", ".join(f"{ch} {n}/{MAX_POSTS_PER_CHANNEL}"
+                         for ch, n in sorted(per_channel.items()))
+    print(f"\n  per channel: {cap_line}")
 
     if args.dry_run:
-        placements = sum(len(TRACKS[t]["channels"]) * 6 for t in tracks)
-        print(f"\n[dry-run] would produce {len(tracks) * 6} posts, "
-              f"{placements} placements. Nothing written.")
+        print(f"\n[dry-run] would produce {total_posts} posts "
+              f"({total_dropped} skipped), {sum(per_channel.values())} placements. "
+              f"Nothing written.")
         return 0
 
     week_dir = REPO / str(year) / f"W{week:02d}"
@@ -267,7 +316,7 @@ def main() -> int:
     for track in tracks:
         p = plan[track]
         cfg = TRACKS[track]
-        print(f"\n[render] {track}: 6 posters -> {week_dir}")
+        print(f"\n[render] {track}: {len(p['posts'])} posters -> {week_dir}")
         render_week(track, p["posts"], p["series_week"], week_dir, iso_label)
 
         for post in p["posts"]:
@@ -290,15 +339,21 @@ def main() -> int:
                 "media": png, "channels": ", ".join(cfg["channels"]),
             })
 
+    check_channel_caps(rows_by_channel)
     print(f"\n[csv] writing source CSVs -> {source_csv_dir}")
     write_channel_csvs(rows_by_channel, source_csv_dir, iso_label)
 
     manifest = week_dir / "manifest.json"
     manifest.write_text(json.dumps({
         "iso_week": iso_label,
+        "max_posts_per_channel": MAX_POSTS_PER_CHANNEL,
         "tracks": {t: {"series_week": plan[t]["series_week"],
                        "cycle": plan[t]["cycle"],
-                       "module": plan[t]["posts"][0]["module_title"]}
+                       "module": plan[t]["posts"][0]["module_title"],
+                       "published_days": [p["day"] for p in plan[t]["posts"]],
+                       "skipped": [{"day": p["day"], "role": p["role"],
+                                    "headline": p["visual_headline"]}
+                                   for p in plan[t]["dropped"]]}
                    for t in tracks},
         "posts": review_rows,
     }, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -313,7 +368,7 @@ def main() -> int:
     else:
         print("[state] --no-advance, cursors unchanged")
 
-    print(f"\n[done] {len(tracks) * 6} posters in {week_dir}")
+    print(f"\n[done] {total_posts} posters in {week_dir} ({total_dropped} slots skipped)")
     print(f"       source CSVs in {source_csv_dir}")
     print("       next: push posters, then run tools/finalize_buffer_csvs.py")
     return 0

@@ -1,29 +1,47 @@
 {
   "iso_week": "2026-W33",
+  "max_posts_per_channel": 10,
   "tracks": {
     "b2b": {
       "series_week": 1,
       "cycle": 1,
-      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large"
+      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
+      "published_days": [
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ],
+      "skipped": [
+        {
+          "day": "Mon",
+          "role": "The Frame",
+          "headline": "Your company can be small and your hiring can still be complex."
+        }
+      ]
     },
     "b2c": {
       "series_week": 1,
       "cycle": 1,
-      "module": "Why the Employment Market Feels Harder Than It Should"
+      "module": "Why the Employment Market Feels Harder Than It Should",
+      "published_days": [
+        "Mon",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ],
+      "skipped": [
+        {
+          "day": "Tue",
+          "role": "The Mechanism",
+          "headline": "Your experience gets compressed before it gets judged."
+        }
+      ]
     }
   },
   "posts": [
-    {
-      "track": "b2b",
-      "day": "Mon",
-      "time": "08:00",
-      "role": "The Frame",
-      "headline": "Your company can be small and your hiring can still be complex.",
-      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
-      "cta": "Audit your hiring workflow",
-      "media": "2026-W33-b2b-mon.png",
-      "channels": "linkedin, facebook"
-    },
     {
       "track": "b2b",
       "day": "Tue",
@@ -88,17 +106,6 @@
       "module": "Why the Employment Market Feels Harder Than It Should",
       "cta": "Identify your skills",
       "media": "2026-W33-b2c-mon.png",
-      "channels": "linkedin, facebook, instagram"
-    },
-    {
-      "track": "b2c",
-      "day": "Tue",
-      "time": "12:00",
-      "role": "The Mechanism",
-      "headline": "Your experience gets compressed before it gets judged.",
-      "module": "Why the Employment Market Feels Harder Than It Should",
-      "cta": "Review your resume",
-      "media": "2026-W33-b2c-tue.png",
       "channels": "linkedin, facebook, instagram"
     },
     {
