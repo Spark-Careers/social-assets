@@ -1,5 +1,8 @@
-# Test renders (per-developer scratch)
+# Test renders and render scratch (per-developer)
 tools/generate/_test_renders/
+tools/generate/_spec_check/
+tools/generate/_poster_html/
+tools/generate/_render_*.html
 
 # Per-run logs (only useful locally)
 runs/
