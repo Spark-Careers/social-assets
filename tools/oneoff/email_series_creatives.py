@@ -19,6 +19,7 @@ instructional ones alternate cream and ink.
 
 from __future__ import annotations
 
+import argparse
 import sys
 from pathlib import Path
 
@@ -121,6 +122,13 @@ def validate() -> list[str]:
 
 
 def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--scale", type=int, default=3,
+                    help="1 = 1080x1350 (LinkedIn spec), 2 = 2160x2700, "
+                         "3 = 3240x4050 (default, high resolution).")
+    ap.add_argument("--out", type=Path, default=None)
+    args = ap.parse_args()
+
     issues = validate()
     if issues:
         print("VALIDATION ISSUES:")
@@ -128,7 +136,9 @@ def main() -> int:
             print(f"  - {i}")
         return 1
 
-    OUT.mkdir(parents=True, exist_ok=True)
+    out_dir = args.out or OUT
+    out_dir.mkdir(parents=True, exist_ok=True)
+    suffix = "" if args.scale == 1 else f"@{args.scale}x"
     by_direction: dict[str, list[tuple[dict, Path]]] = {}
 
     for item in SERIES:
@@ -142,16 +152,17 @@ def main() -> int:
             "brand": BRAND,
             "url": URL,
         }
-        out = OUT / f"spark-email-{item['n']:02d}-{item['slug']}.png"
+        out = out_dir / f"spark-email-{item['n']:02d}-{item['slug']}{suffix}.png"
         by_direction.setdefault(item["direction"], []).append((payload, out))
 
+    print(f"[size] {1080 * args.scale} x {1350 * args.scale}  (scale {args.scale}x)")
     for direction, batch in by_direction.items():
         print(f"[render] {direction}: {len(batch)}")
-        render_posts(batch, direction=direction)
+        render_posts(batch, direction=direction, scale=args.scale)
         for _, out in batch:
             print(f"           {out.name}")
 
-    print(f"\n[done] {len(SERIES)} creatives in {OUT}")
+    print(f"\n[done] {len(SERIES)} creatives in {out_dir}")
     return 0
 
 

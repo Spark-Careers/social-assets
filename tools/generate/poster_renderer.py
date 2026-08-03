@@ -303,25 +303,32 @@ def payload_from_curriculum(post: dict, *, series_len: int = 6,
     }
 
 
-def render_posts(payloads: list[tuple[dict, Path]], direction: str = "1a") -> None:
+def render_posts(payloads: list[tuple[dict, Path]], direction: str = "1a",
+                 scale: int = 1) -> None:
     """Render a batch of payloads. Each tuple is (payload, output_path).
 
-    Rendered at 2x and downsampled to 1080x1350 so hairlines survive, per the
-    handoff's export note.
+    `scale` multiplies the delivered size: 1 gives the 1080x1350 spec size,
+    2 gives 2160x2700, 3 gives 3240x4050. Whatever the target, the browser
+    renders at twice it and the result is downsampled by half, which is what
+    keeps the hairline rules and the outlined ghost numeral from breaking up.
+    That supersampling step is the handoff's export note generalised.
     """
     if direction not in BUILDERS:
         raise ValueError(f"unknown direction {direction!r}, expected one of {list(BUILDERS)}")
+    if scale < 1:
+        raise ValueError(f"scale must be at least 1, got {scale}")
 
     from PIL import Image
 
     scratch = Path(__file__).resolve().parent / "_poster_html"
     scratch.mkdir(exist_ok=True)
     build = BUILDERS[direction]
+    target = (CANVAS_W * scale, CANVAS_H * scale)
 
     with sync_playwright() as pw:
         browser = pw.chromium.launch()
         ctx = browser.new_context(viewport={"width": CANVAS_W, "height": CANVAS_H},
-                                  device_scale_factor=2)
+                                  device_scale_factor=scale * 2)
         page = ctx.new_page()
         for payload, out in payloads:
             f = scratch / f"_{direction}_{out.stem}.html"
@@ -329,11 +336,11 @@ def render_posts(payloads: list[tuple[dict, Path]], direction: str = "1a") -> No
             page.goto(f"file:///{f.as_posix()}", wait_until="networkidle")
             page.wait_for_timeout(700)
             out.parent.mkdir(parents=True, exist_ok=True)
-            tmp = out.with_suffix(".2x.png")
+            tmp = out.with_suffix(".super.png")
             page.screenshot(path=str(tmp),
                             clip={"x": 0, "y": 0, "width": CANVAS_W, "height": CANVAS_H})
             with Image.open(tmp) as im:
-                im.resize((CANVAS_W, CANVAS_H), Image.LANCZOS).save(out)
+                im.resize(target, Image.LANCZOS).save(out)
             tmp.unlink(missing_ok=True)
             f.unlink(missing_ok=True)
         browser.close()
