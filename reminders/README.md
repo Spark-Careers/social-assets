@@ -14,8 +14,8 @@ upload it to Buffer.
 ```bash
 cd "C:\Users\HP\Desktop\Personal Docs\Post Shell Projects\IdleSpark\Marketing\social-assets"
 
-python tools/generate/run_daily_weekly.py --dry-run     # confirm the week and modules
-python tools/generate/run_daily_weekly.py               # render 12 posters, write source CSVs
+python tools/generate/run_daily_weekly.py --dry-run     # confirm the week and posts
+python tools/generate/run_daily_weekly.py               # render 5 posters, write source CSVs
 
 git add 2026/ content/curriculum_state.json
 git commit -m "2026-WNN: daily tracks"
@@ -27,7 +27,9 @@ python tools/finalize_buffer_csvs.py --week 2026-WNN \
 ```
 
 Then open Buffer and bulk-upload the three `*-final.csv` files, one per channel:
-Publish tab, channel, gear icon, General, Bulk Upload.
+Publish tab, channel, gear icon, General, Bulk Upload. Each carries five rows:
+B2B on Monday, Wednesday and Friday at 08:00, B2C on Tuesday and Thursday at
+12:00.
 
 Full detail lives in `tools/generate/DAILY_TRACKS.md`.
 

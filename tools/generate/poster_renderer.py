@@ -7,9 +7,21 @@ picks a direction and supplies the content payload.
 Implements the three directions specified in
     design/b2c-template-system/README.md
 
-    1a  Cut Numeral  cream, editorial grid   (default / primary)
+    1a  Cut Numeral  cream, editorial grid
     1b  Spine        ink ground, vertical index
     1c  Field        teal block, poster scale
+
+plus a stripped family added for the daily tracks, same type system and
+tokens, all labelling furniture removed:
+
+    2a  Minimal      cream ground   (B2C default)
+    2b  Minimal      ink ground     (B2B default)
+    2c  Minimal      teal ground
+
+The 1x directions print the editorial role, a week numeral and a day counter.
+Those name the post instead of saying anything, so the 2x family drops them
+along with the grid, rings and spine. What is left is the headline, one
+supporting line, the wordmark and the address.
 
 Canvas is a fixed 1080 x 1350 poster. Per the handoff, rendering is done at
 2x device pixel ratio and downsampled so the hairline rules survive.
@@ -59,6 +71,27 @@ HEADLINE_FIT = {
     "1a": (118, 72, 376),
     "1b": (112, 68, 470),
     "1c": (104, 64, 487),
+    "2a": (116, 64, 620),
+    "2b": (116, 64, 620),
+    "2c": (110, 62, 600),
+}
+
+# The 2x family: same composition, three grounds. Everything that labels the
+# post rather than saying something is gone, so a poster carries four elements
+# instead of nine: headline, supporting line, wordmark, address. No editorial
+# role, no week numeral, no progress counter, no grid, no rings, no spine.
+#
+# Because there is no fixed furniture to sit around, the headline and body are
+# centred as a block in the space above the footer. Headlines in the curricula
+# run from 19 to 85 characters and a fixed anchor leaves short ones stranded
+# high on the canvas.
+MINIMAL = {
+    "2a": {"ground": CREAM, "ink": INK, "accent": TEAL,
+           "body": BODY_WARM, "border": INK, "url": TEAL},
+    "2b": {"ground": INK_DEEP, "ink": CREAM, "accent": TEAL,
+           "body": BODY_COOL, "border": HAIRLINE_LIGHT, "url": TEAL},
+    "2c": {"ground": TEAL, "ink": CREAM, "accent": INK_TEAL,
+           "body": "rgba(244,241,234,0.82)", "border": HAIRLINE_LIGHT, "url": CREAM},
 }
 
 
@@ -276,7 +309,57 @@ def _html_1c(p: dict) -> str:
 </body></html>"""
 
 
-BUILDERS = {"1a": _html_1a, "1b": _html_1b, "1c": _html_1c}
+# --------------------------------------------------------------------- 2a/2b/2c
+def _html_minimal(p: dict, direction: str) -> str:
+    v = MINIMAL[direction]
+    hb = (f'<span style="color:{v["accent"]}">{_esc(p["headline_b"])}</span>'
+          if p.get("headline_b") else "")
+    body = (f'<div class="body">{_esc(p["body"])}</div>'
+            if p.get("body") else "")
+    return f"""<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{FONTS}" rel="stylesheet">
+<style>
+ *{{box-sizing:border-box;margin:0;padding:0}}
+ html,body{{width:{CANVAS_W}px;height:{CANVAS_H}px;overflow:hidden}}
+ body{{font-family:Archivo,Helvetica,sans-serif;background:{v["ground"]};
+   -webkit-font-smoothing:antialiased}}
+ .poster{{position:relative;width:{CANVAS_W}px;height:{CANVAS_H}px;overflow:hidden}}
+ .stack{{position:absolute;left:88px;right:88px;top:120px;bottom:132px;
+   display:flex;flex-direction:column;justify-content:center;gap:56px}}
+ #headline{{font-weight:800;line-height:.94;letter-spacing:-.045em;
+   color:{v["ink"]};text-wrap:balance}}
+ .body{{font-weight:400;font-size:38px;line-height:1.38;color:{v["body"]};
+   max-width:820px;text-wrap:pretty}}
+ .footer{{position:absolute;left:0;right:0;bottom:0;height:132px;padding:0 88px;
+   border-top:2px solid {v["border"]};display:flex;align-items:center;
+   justify-content:space-between}}
+ .brand{{font-weight:800;font-size:26px;letter-spacing:.12em;text-transform:uppercase;
+   white-space:nowrap;color:{v["ink"]}}}
+ .url{{font-family:'Space Mono',monospace;font-weight:400;font-size:21px;
+   color:{v["url"]}}}
+</style></head><body>
+<div class="poster">
+  <div class="stack">
+    <div id="headline">{_esc(p["headline_a"])} {hb}</div>
+    {body}
+  </div>
+  <div class="footer">
+    <div class="brand">{_esc(p["brand"])}</div>
+    <div class="url">{_esc(p["url"])}</div>
+  </div>
+</div>
+<script>{_fit_script(direction)}</script>
+</body></html>"""
+
+
+BUILDERS = {
+    "1a": _html_1a, "1b": _html_1b, "1c": _html_1c,
+    "2a": lambda p: _html_minimal(p, "2a"),
+    "2b": lambda p: _html_minimal(p, "2b"),
+    "2c": lambda p: _html_minimal(p, "2c"),
+}
 
 
 def payload_from_curriculum(post: dict, *, series_len: int = 6,
