@@ -107,9 +107,27 @@ def date_for(year: int, week: int, day: str) -> str:
     return (monday + timedelta(days=DAY_INDEX[day])).isoformat()
 
 
-def slots_for(track: str) -> list[str]:
+def trim_plan(from_day: str | None) -> list[tuple[str, str]]:
+    """The day plan, optionally with the days before `from_day` removed.
+
+    Used when a week is already underway, which happens on the first week of a
+    campaign and whenever a build is late. Skipped days are not made up: the
+    posts stay in the queue and everything shifts one slot later.
+    """
+    if not from_day:
+        return list(DAY_PLAN)
+    day = from_day.strip().title()[:3]
+    if day not in DAY_INDEX:
+        sys.exit(f"--from-day must be a weekday like Tue, got {from_day!r}")
+    trimmed = [(d, t) for d, t in DAY_PLAN if DAY_INDEX[d] >= DAY_INDEX[day]]
+    if not trimmed:
+        sys.exit(f"--from-day {day} leaves no publishing days in the week")
+    return trimmed
+
+
+def slots_for(track: str, plan: list[tuple[str, str]]) -> list[str]:
     """Publishing days assigned to a track, in order."""
-    return [day for day, t in DAY_PLAN if t == track]
+    return [day for day, t in plan if t == track]
 
 
 # ---------------------------------------------------------------------- state
@@ -216,6 +234,9 @@ def main() -> int:
                     help="Override which B2B post number the week starts from.")
     ap.add_argument("--b2c-start-seq", type=int, default=None,
                     help="Override which B2C post number the week starts from.")
+    ap.add_argument("--from-day", default=None,
+                    help="Drop publishing days before this one, for a week that is "
+                         "already underway, e.g. --from-day Tue.")
     ap.add_argument("--tracks", default="b2b,b2c",
                     help="Comma-separated tracks to build. Default both.")
     ap.add_argument("--downloads-dir", type=Path, default=Path.home() / "Downloads")
@@ -237,8 +258,14 @@ def main() -> int:
     else:
         year, week, iso_label = default_iso_week()
 
+    day_plan = trim_plan(args.from_day)
+
     print(f"=== Spark daily tracks: calendar week {iso_label} ===")
     print(f"Repo: {REPO}")
+    if args.from_day:
+        kept = {d for d, _ in day_plan}
+        dropped = [d for d, _ in DAY_PLAN if d not in kept]
+        print(f"  [plan] starting {day_plan[0][0]}, already past: {', '.join(dropped)}")
 
     state = load_state()
     overrides = {"b2b": args.b2b_start_seq, "b2c": args.b2c_start_seq}
@@ -248,7 +275,11 @@ def main() -> int:
         cur = load_curriculum(track)
         st = state.setdefault(track, {"next_seq": 1})
         start = overrides[track] or st["next_seq"]
-        days = slots_for(track)
+        days = slots_for(track, day_plan)
+        if not days:
+            print(f"  [{track}] no publishing days left in this week")
+            plan[track] = {"scheduled": [], "left": 0, "total": cur["total_posts"]}
+            continue
         posts, left = take_next(cur, start, len(days))
 
         if not posts:
@@ -265,7 +296,10 @@ def main() -> int:
         plan[track] = {"scheduled": scheduled, "left": left,
                        "total": cur["total_posts"], "start": start}
 
-        weeks_left = -(-left // len(days)) if left else 0
+        # Project against a normal week, not this one. A trimmed first week
+        # would otherwise make the runway look twice as long as it is.
+        per_week = len(slots_for(track, DAY_PLAN))
+        weeks_left = -(-left // per_week) if left else 0
         print(f"  [{track}] posts {posts[0]['seq']} to {posts[-1]['seq']} "
               f"of {cur['total_posts']}   time {TRACKS[track]['time']}   "
               f"direction {TRACKS[track]['direction']}")
@@ -334,7 +368,7 @@ def main() -> int:
     manifest = week_dir / "manifest.json"
     manifest.write_text(json.dumps({
         "iso_week": iso_label,
-        "day_plan": [{"day": d, "track": t} for d, t in DAY_PLAN],
+        "day_plan": [{"day": d, "track": t} for d, t in day_plan],
         "tracks": {t: {"start_seq": plan[t].get("start"),
                        "published_seq": [p["seq"] for _, p in plan[t]["scheduled"]],
                        "posts_remaining": plan[t]["left"],

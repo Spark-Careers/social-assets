@@ -1,10 +1,6 @@
 {
-  "iso_week": "2026-W38",
+  "iso_week": "2026-W37",
   "day_plan": [
-    {
-      "day": "Mon",
-      "track": "b2b"
-    },
     {
       "day": "Tue",
       "track": "b2c"
@@ -24,79 +20,67 @@
   ],
   "tracks": {
     "b2b": {
-      "start_seq": 3,
+      "start_seq": 1,
       "published_seq": [
-        3,
-        4,
-        5
+        1,
+        2
       ],
-      "posts_remaining": 145,
+      "posts_remaining": 148,
       "total_posts": 150
     },
     "b2c": {
-      "start_seq": 3,
+      "start_seq": 1,
       "published_seq": [
-        3,
-        4
+        1,
+        2
       ],
-      "posts_remaining": 62,
+      "posts_remaining": 64,
       "total_posts": 66
     }
   },
   "posts": [
     {
       "track": "b2b",
-      "day": "Mon",
-      "time": "08:00",
-      "seq": 3,
-      "role": "The Technique",
-      "headline": "Before you add software, draw the process.",
-      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
-      "media": "2026-W38-b2b-mon.png",
-      "channels": "linkedin, facebook, instagram"
-    },
-    {
-      "track": "b2b",
       "day": "Wed",
       "time": "08:00",
-      "seq": 4,
-      "role": "The Nuance",
-      "headline": "Structure is not bureaucracy. Unclear ownership is.",
+      "seq": 1,
+      "role": "The Frame",
+      "headline": "Your company can be small and your hiring can still be complex.",
       "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
-      "media": "2026-W38-b2b-wed.png",
+      "media": "2026-W37-b2b-wed.png",
       "channels": "linkedin, facebook, instagram"
     },
     {
       "track": "b2b",
       "day": "Fri",
       "time": "08:00",
-      "seq": 5,
-      "role": "The Limit",
-      "headline": "A new system cannot rescue an undefined process.",
+      "seq": 2,
+      "role": "The Mechanism",
+      "headline": "Hiring breaks when the process lives in five different places.",
       "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
-      "media": "2026-W38-b2b-fri.png",
+      "media": "2026-W37-b2b-fri.png",
       "channels": "linkedin, facebook, instagram"
     },
     {
       "track": "b2c",
       "day": "Tue",
       "time": "12:00",
-      "seq": 3,
-      "role": "The Technique",
-      "headline": "The job description is incomplete too.",
+      "seq": 1,
+      "role": "The Frame",
+      "headline": "The market is not only hard. It is badly translated.",
       "module": "Why the Employment Market Feels Harder Than It Should",
-      "media": "2026-W38-b2c-tue.png",
+      "media": "2026-W37-b2c-tue.png",
       "channels": "linkedin, facebook, instagram"
     },
     {
       "track": "b2c",
       "day": "Thu",
       "time": "12:00",
-      "seq": 4,
-      "role": "The Nuance",
-      "headline": "Rejection is often uncertainty, not a verdict.",
+      "seq": 2,
+      "role": "The Mechanism",
+      "headline": "Your experience gets compressed before it gets judged.",
       "module": "Why the Employment Market Feels Harder Than It Should",
-      "media": "2026-W38-b2c-thu.png",
+      "media": "2026-W37-b2c-thu.png",
       "channels": "linkedin, facebook, instagram"
     }
   ]
