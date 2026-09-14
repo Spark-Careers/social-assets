@@ -1,0 +1,103 @@
+{
+  "iso_week": "2026-W39",
+  "day_plan": [
+    {
+      "day": "Mon",
+      "track": "b2b"
+    },
+    {
+      "day": "Tue",
+      "track": "b2c"
+    },
+    {
+      "day": "Wed",
+      "track": "b2b"
+    },
+    {
+      "day": "Thu",
+      "track": "b2c"
+    },
+    {
+      "day": "Fri",
+      "track": "b2b"
+    }
+  ],
+  "tracks": {
+    "b2b": {
+      "start_seq": 6,
+      "published_seq": [
+        6,
+        7,
+        8
+      ],
+      "posts_remaining": 142,
+      "total_posts": 150
+    },
+    "b2c": {
+      "start_seq": 5,
+      "published_seq": [
+        5,
+        6
+      ],
+      "posts_remaining": 60,
+      "total_posts": 66
+    }
+  },
+  "posts": [
+    {
+      "track": "b2b",
+      "day": "Mon",
+      "time": "08:00",
+      "seq": 6,
+      "role": "The Action",
+      "headline": "Take one recent hire. Find where the process broke.",
+      "module": "Why Hiring Becomes Difficult Before a Company Becomes Large",
+      "media": "2026-W39-b2b-mon.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2b",
+      "day": "Wed",
+      "time": "08:00",
+      "seq": 7,
+      "role": "The Frame",
+      "headline": "The first hiring mistake happens before the job is posted.",
+      "module": "Define the Work Before Searching for the Person",
+      "media": "2026-W39-b2b-wed.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2b",
+      "day": "Fri",
+      "time": "08:00",
+      "seq": 8,
+      "role": "The Mechanism",
+      "headline": "Define what must change after the person is hired.",
+      "module": "Define the Work Before Searching for the Person",
+      "media": "2026-W39-b2b-fri.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2c",
+      "day": "Tue",
+      "time": "12:00",
+      "seq": 5,
+      "role": "The Limit",
+      "headline": "No tool can remove uncertainty. Good tools make it visible.",
+      "module": "Why the Employment Market Feels Harder Than It Should",
+      "media": "2026-W39-b2c-tue.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2c",
+      "day": "Thu",
+      "time": "12:00",
+      "seq": 6,
+      "role": "The Action",
+      "headline": "Find where your story is getting lost.",
+      "module": "Why the Employment Market Feels Harder Than It Should",
+      "media": "2026-W39-b2c-thu.png",
+      "channels": "linkedin, facebook, instagram"
+    }
+  ]
+}
