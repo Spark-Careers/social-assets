@@ -1,8 +1,8 @@
 {
   "b2b": {
-    "next_seq": 9
+    "next_seq": 12
   },
   "b2c": {
-    "next_seq": 7
+    "next_seq": 9
   }
 }
