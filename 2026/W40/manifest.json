@@ -1,0 +1,103 @@
+{
+  "iso_week": "2026-W40",
+  "day_plan": [
+    {
+      "day": "Mon",
+      "track": "b2b"
+    },
+    {
+      "day": "Tue",
+      "track": "b2c"
+    },
+    {
+      "day": "Wed",
+      "track": "b2b"
+    },
+    {
+      "day": "Thu",
+      "track": "b2c"
+    },
+    {
+      "day": "Fri",
+      "track": "b2b"
+    }
+  ],
+  "tracks": {
+    "b2b": {
+      "start_seq": 12,
+      "published_seq": [
+        12,
+        13,
+        14
+      ],
+      "posts_remaining": 136,
+      "total_posts": 150
+    },
+    "b2c": {
+      "start_seq": 9,
+      "published_seq": [
+        9,
+        10
+      ],
+      "posts_remaining": 56,
+      "total_posts": 66
+    }
+  },
+  "posts": [
+    {
+      "track": "b2b",
+      "day": "Mon",
+      "time": "08:00",
+      "seq": 12,
+      "role": "The Action",
+      "headline": "Write the first-year outcomes before you write the job description.",
+      "module": "Define the Work Before Searching for the Person",
+      "media": "2026-W40-b2b-mon.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2b",
+      "day": "Wed",
+      "time": "08:00",
+      "seq": 13,
+      "role": "The Frame",
+      "headline": "Titles divide the workforce. Skills give it a shared language.",
+      "module": "Build a Practical Skills Architecture",
+      "media": "2026-W40-b2b-wed.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2b",
+      "day": "Fri",
+      "time": "08:00",
+      "seq": 14,
+      "role": "The Mechanism",
+      "headline": "A skill without context is almost useless.",
+      "module": "Build a Practical Skills Architecture",
+      "media": "2026-W40-b2b-fri.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2c",
+      "day": "Tue",
+      "time": "12:00",
+      "seq": 9,
+      "role": "The Technique",
+      "headline": "Different industries often name the same skill differently.",
+      "module": "Skills as a Common Language",
+      "media": "2026-W40-b2c-tue.png",
+      "channels": "linkedin, facebook, instagram"
+    },
+    {
+      "track": "b2c",
+      "day": "Thu",
+      "time": "12:00",
+      "seq": 10,
+      "role": "The Nuance",
+      "headline": "Skill alone is not enough. You need proof and relevance.",
+      "module": "Skills as a Common Language",
+      "media": "2026-W40-b2c-thu.png",
+      "channels": "linkedin, facebook, instagram"
+    }
+  ]
+}
