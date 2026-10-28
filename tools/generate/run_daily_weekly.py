@@ -190,10 +190,16 @@ def build_captions(post: dict, track: str) -> dict:
     No call to action. The curriculum's CTA column repeats heavily on B2C
     (seven phrases across sixty-six posts) and its verbs point at exercises the
     site does not host, so the instruction was doing more harm than the link.
-    The bare domain carries no UTM parameters, which keeps the caption clean at
-    the cost of campaign attribution.
+    The link carries no UTM parameters, which keeps the caption clean at the
+    cost of campaign attribution.
+
+    The scheme is included. A bare domain is not reliably detected as a link,
+    and an undetected link is more likely to be rewritten or dropped on the way
+    out. Buffer's own shortener still rewrites links to buff.ly when it is
+    switched on, which is a per-channel setting there, not something the CSV
+    can control.
     """
-    text = f"{post['post'].strip()}\n\n{TRACKS[track]['url']}"
+    text = f"{post['post'].strip()}\n\nhttps://{TRACKS[track]['url']}"
     return {channel: text for channel in ("linkedin", "facebook", "instagram")}
 
 

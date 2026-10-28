@@ -35,44 +35,50 @@ RAW = ("https://raw.githubusercontent.com/Spark-Careers/social-assets/main/"
 
 CHANNELS = ["linkedin", "facebook", "instagram"]
 TIME = "12:00"
-URL = "spark.risepointcareers.com"
+
+# Full scheme, deliberately. A bare domain is not reliably detected as a link,
+# and an undetected link is more likely to be rewritten or dropped on the way
+# out. This does not stop Buffer's own shortener, which turns any link into a
+# buff.ly address: that is a per-channel setting in Buffer, not something the
+# CSV can control.
+URL = "https://spark.risepointcareers.com"
 
 # (date, image basename, caption body). The link line is appended below, so
 # the body is the whole caption apart from it.
 POSTS = [
-    ("2026-10-30", "Khalid_Morning_4x5_1080x1350.png",
+    ("2026-10-29", "Khalid_Morning_4x5_1080x1350.png",
      "Most job hunts start with the same question every morning: what is new "
      "today? Autopilot answers it before you wake up. It checks every new job "
      "against your CV and keeps the ones that fit."),
-    ("2026-10-31", "Andrea_Commute_4x5_1080x1350.png",
+    ("2026-10-30", "Andrea_Commute_4x5_1080x1350.png",
      "A commute is a hard place to job hunt. Small screen, patchy signal, ten "
      "tabs open. Autopilot does the searching in the background, so the ride "
      "can just be a ride."),
-    ("2026-11-03", "Thandi_BeforeAfter_4x5_1080x1350.png",
+    ("2026-11-02", "Thandi_BeforeAfter_4x5_1080x1350.png",
      "Searching is not the hard part of finding a job. Sorting is. Hundreds of "
      "listings, most of them wrong for you. Autopilot sorts them against your "
      "CV, so you only see the ones worth applying to."),
-    ("2026-11-04", "Aisyah_Commute_4x5_1080x1350.png",
+    ("2026-11-03", "Aisyah_Commute_4x5_1080x1350.png",
      "Same train, same scroll, same listings you saw yesterday. Autopilot only "
      "shows you what is new and what fits your CV."),
-    ("2026-11-05", "Rahul_Morning_4x5_1080x1350.png",
+    ("2026-11-04", "Rahul_Morning_4x5_1080x1350.png",
      "Moving countries for work means learning a new job market from scratch. "
      "Autopilot reads it for you, checking every new role against your CV, "
      "every day."),
-    ("2026-11-06", "Noura_Commute_4x5_1080x1350.png",
+    ("2026-11-05", "Noura_Commute_4x5_1080x1350.png",
      "A good match is more than a job title. It is the skills on your CV "
      "lining up with the skills a role needs. That is what Autopilot checks, "
      "for every new job."),
-    ("2026-11-07", "Mark_BeforeAfter_4x5_1080x1350.png",
+    ("2026-11-06", "Mark_BeforeAfter_4x5_1080x1350.png",
      "Before: forty open tabs and no idea which roles fit. After: one ranked "
      "list, built from your CV."),
-    ("2026-11-10", "Kagiso_Morning_4x5_1080x1350.png",
+    ("2026-11-09", "Kagiso_Morning_4x5_1080x1350.png",
      "Wake up, make coffee, check your matches. Job hunting does not have to "
      "feel like a second job."),
-    ("2026-11-11", "Wei_Jie_BeforeAfter_4x5_1080x1350.png",
+    ("2026-11-10", "Wei_Jie_BeforeAfter_4x5_1080x1350.png",
      "You should not need a spreadsheet to track your job search. Autopilot "
      "keeps your best matches in one place, scored against your skills."),
-    ("2026-11-12", "Grace_Commute_4x5_1080x1350.png",
+    ("2026-11-11", "Grace_Commute_4x5_1080x1350.png",
      "Hospitality means long shifts and little time to search. Autopilot keeps "
      "looking while you work, so your best matches are ready when your shift "
      "ends."),
